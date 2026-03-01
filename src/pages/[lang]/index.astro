@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Features from '../../components/Features.astro';
+import TechStack from '../../components/TechStack.astro';
+import CTA from '../../components/CTA.astro';
+import BlogPreview from '../../components/BlogPreview.astro';
+import { languages, defaultLang, type Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return Object.keys(languages)
+    .filter((lang) => lang !== defaultLang)
+    .map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t('meta.title')} lang={lang}>
+  <Hero lang={lang} />
+  <Features lang={lang} />
+  <TechStack lang={lang} />
+  <BlogPreview lang={lang} />
+  <CTA lang={lang} />
+</BaseLayout>

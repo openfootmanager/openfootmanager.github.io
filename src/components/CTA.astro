@@ -1,0 +1,48 @@
+---
+import { Icon } from 'astro-icon/components';
+import { type Lang, defaultLang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang ?? defaultLang;
+const t = useTranslations(lang);
+---
+
+<section class="relative py-24 overflow-hidden">
+  <!-- Background -->
+  <div class="absolute inset-0">
+    <img src="/trophycrowd.jpg" alt="" class="w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/90 via-emerald-900/85 to-emerald-950/95"></div>
+  </div>
+
+  <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="font-heading text-4xl md:text-5xl font-bold text-white uppercase mb-6">
+      {t('cta.heading.pre')} <span class="text-amber-400">{t('cta.heading.highlight')}</span>
+    </h2>
+    <p class="text-emerald-100/70 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+      {t('cta.subheading')}
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a
+        href="https://github.com/openfootmanager/openfootmanager"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-8 py-4 bg-white text-emerald-900 font-heading text-lg font-bold uppercase tracking-wider rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+      >
+        <Icon name="lucide:github" class="w-5 h-5" />
+        {t('cta.github')}
+      </a>
+      <a
+        href="https://github.com/openfootmanager/openfootmanager/blob/develop/CONTRIBUTING.md"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-8 py-4 border-2 border-white/25 hover:border-white/50 text-white font-heading text-lg font-bold uppercase tracking-wider rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+      >
+        {t('cta.contribute')}
+      </a>
+    </div>
+  </div>
+</section>
