@@ -1,6 +1,6 @@
 ---
-title: "Por qué Reescribimos Todo en Rust"
-description: "La historia detrás de nuestra decisión de reescribir Openfoot Manager de Python a Rust, y lo que significa para el futuro del proyecto."
+title: "Por Qué Reescribimos Todo en Rust"
+description: "La historia detrás de nuestra decisión de reescribir Openfoot Manager de Python a Rust y lo que significa para el futuro del proyecto."
 pubDate: 2026-03-01T00:00:00.000Z
 author: "Sturdy Robot"
 tags: ["notas-dev", "rust"]
@@ -8,56 +8,56 @@ image: "/trophycrowd.jpg"
 lang: "es"
 ---
 
-Una de las mayores decisiones en la historia de Openfoot Manager fue la elección de reescribir todo el motor del juego de Python a Rust y usar React para el frontend. Aquí está el porqué, lo que ganamos y hacia dónde nos dirigimos.
+Una de las decisiones más importantes en la historia de Openfoot Manager fue reescribir por completo el motor del juego, pasando de Python a Rust, y utilizar React para el frontend. Aquí explico por qué tomamos esta decisión, qué ganamos con ella y hacia dónde nos dirigimos.
 
-## El comienzo del proyecto
+## El inicio del proyecto
 
-Openfoot Manager comenzó como un proyecto en Python en 2020. Python fue una elección natural para mí: es un lenguaje fácil, con un ecosistema rico, y el lenguaje con el que estaba más familiarizado en ese momento, un lenguaje que disfruto escribiendo y cuya comunidad me encanta.
+Openfoot Manager comenzó en 2020 como un proyecto en Python. Python fue una elección natural para mí: es un lenguaje accesible, con un ecosistema muy rico, y el lenguaje con el que me sentía más cómodo en ese momento. Además, disfruto mucho escribir en Python y valoro enormemente a su comunidad.
 
-Construí prototipos iniciales cuando no sabía muy bien lo que estaba haciendo. Probé varias ideas para construir una simulación de partidos sólida, y funcionaron, pero evolucionar eso hacia un proyecto completo fue un gran desafío.
+Los primeros prototipos los construí cuando todavía no tenía del todo claro lo que estaba haciendo. Probé muchas ideas para crear una simulación de partidos sólida. Funcionaban, pero convertir eso en un proyecto completo y bien estructurado fue un reto enorme.
 
-Cuando comencé mi primer MVP, tenía algunas opciones de GUI para usar. No quería usar ningún framework JS para el frontend (había tenido malas experiencias con JavaScript en el pasado), así que terminé usando [**ttkbootstrap**](https://ttkbootstrap.readthedocs.io/en/latest/) para la primera iteración del proyecto.
+Cuando empecé a trabajar en el primer MVP, tenía varias opciones para la GUI. No quería usar frameworks de frontend en JavaScript (había tenido malas experiencias en el pasado), así que terminé usando [**ttkbootstrap**](https://ttkbootstrap.readthedocs.io/en/latest/) para la primera versión del proyecto.
 
-En otro proyecto en el que estaba trabajando, usaba [**PySimpleGUI**](https://docs.pysimplegui.com/en/latest/), y esta vez quería probar algo diferente.
+En otro proyecto utilizaba [**PySimpleGUI**](https://docs.pysimplegui.com/en/latest/), y esta vez quería probar algo distinto.
 
-Resulta que trabajar con widgets ttk era realmente doloroso. Tuve que escribir algunos widgets yo mismo, pero tuve muchas dificultades para descubrir cómo hacer cosas básicas que quería hacer. La parte del backend no fue tan difícil: me tomó un tiempo, pero logré construir un motor capaz de generar datos para ser usados por el motor de simulación de partidos. Después de mucho tiempo experimentando, también construí un motor de simulación de partidos suficientemente bueno.
+Pronto quedó claro que trabajar con widgets ttk era realmente frustrante. Tuve que escribir algunos widgets desde cero y aun así me costaba implementar cosas bastante básicas. El backend fue más manejable: con el tiempo logré construir un motor capaz de generar los datos necesarios para la simulación de partidos. Tras muchas pruebas, conseguí una simulación suficientemente buena.
 
-Pero la GUI era algo que realmente quería resolver sin JS. Intenté de todo. Intenté usar [**Qt**](https://www.qt.io/), pero tampoco me gustó. Terminé embarcándome en una aventura bastante salvaje: intenté usar un backend [**Flask**](https://flask.palletsprojects.com/) con un frontend que usaba plantillas Jinja2 para renderizar el HTML, y para imitar el comportamiento de React, usaba [**HTMX**](https://htmx.org/) con [**AlpineJS**](https://alpinejs.dev/).
+Sin embargo, la GUI seguía siendo un problema, y quería resolverlo sin JavaScript. Probé absolutamente de todo. También intenté usar [**Qt**](https://www.qt.io/), pero no me convenció. Finalmente me embarqué en una solución bastante extrema: un backend con [**Flask**](https://flask.palletsprojects.com/), un frontend basado en plantillas Jinja2 para renderizar HTML y, para imitar el comportamiento de React, el uso de [**HTMX**](https://htmx.org/) junto con [**AlpineJS**](https://alpinejs.dev/).
 
-Más tarde cambié Flask por [**FastAPI**](https://fastapi.tiangolo.com/), y reescribí todo el backend para usar [**SQLModel**](https://sqlmodel.tiangolo.com/), que es una mezcla de [**Pydantic**](https://pydantic-docs.helpmanual.io/) y [**SQLAlchemy**](https://www.sqlalchemy.org/). Para proporcionar el estilo, usé [**Tailwindcss**](https://tailwindcss.com/).
+Más adelante sustituí Flask por [**FastAPI**](https://fastapi.tiangolo.com/) y reescribí todo el backend usando [**SQLModel**](https://sqlmodel.tiangolo.com/), una combinación de [**Pydantic**](https://pydantic-docs.helpmanual.io/) y [**SQLAlchemy**](https://www.sqlalchemy.org/). Para el diseño visual utilicé [**Tailwindcss**](https://tailwindcss.com/).
 
-La guinda del pastel, para proporcionar la experiencia de escritorio que quería, usaba [**Pywebview**](https://pywebview.flowrl.com/), y necesitaba usar [**uvicorn**](https://www.uvicorn.org/) para proporcionar el servidor web para que FastAPI se conectara con Pywebview.
+Para ofrecer la experiencia de escritorio que buscaba, integré [**Pywebview**](https://pywebview.flowrl.com/) y usé [**uvicorn**](https://www.uvicorn.org/) como servidor web para que FastAPI pudiera comunicarse con Pywebview.
 
-Resulta que esta solución Frankenstein no era nada fácil de trabajar. Me di cuenta de que estaba cayendo en una trampa de mi propia creación, en lugar de facilitar las cosas. Era realmente difícil obtener un buen rendimiento con Pywebview, y empaquetar esta app como una solución de escritorio es algo que ni siquiera sé cómo habría resuelto. Estaba a punto de simplemente decirle a la gente que iniciara el servidor, abriera el juego en el navegador y listo.
+El resultado fue una auténtica solución Frankenstein, muy difícil de mantener. Me di cuenta de que estaba complicando las cosas en lugar de simplificarlas. Obtener un buen rendimiento con Pywebview era complicado, y empaquetar la aplicación como software de escritorio seguía siendo un problema sin resolver. Estuve a punto de decirles a los usuarios que simplemente arrancaran el servidor y abrieran el juego en el navegador.
 
-También intenté hacer que Python funcionara con React, pero no fue una buena experiencia, ni para el desarrollo ni para la UX.
+También intenté combinar Python con React, pero la experiencia no fue buena, ni para el desarrollo ni para la UX.
 
 ## Rust al rescate
 
-He estado programando en Rust durante bastante tiempo. Es un lenguaje muy poderoso pero pedante. Disfruto usándolo, a pesar de que es difícil acertar algunas cosas al principio. Pero ofrece un rendimiento incomparable, y tiene una comunidad muy dedicada para los propósitos que yo buscaba.
+Llevo programando en Rust desde hace bastante tiempo. Es un lenguaje muy potente, aunque exigente. No es fácil acertar a la primera, pero a cambio ofrece un rendimiento excelente y una fiabilidad sobresaliente. Además, cuenta con una comunidad muy comprometida, alineada con lo que estaba buscando.
 
-[**Tauri**](https://tauri.app/) es uno de los proyectos que más me interesaba. Si quería evitar usar tecnologías relacionadas con JS, como **Electron**, parecía que este era el camino a seguir.
+[**Tauri**](https://tauri.app/) fue uno de los proyectos que más me llamó la atención. Si quería evitar tecnologías muy dependientes de JavaScript como **Electron**, esta era una opción clara.
 
-Mi idea inicial era usar **Tauri** con [**Leptos**](https://leptos.dev/) para el frontend. Un stack completamente basado en **Rust**. Pero fue mucho más difícil de lo que esperaba. Rust para el frontend es poderoso, pero no agradable.
+Mi idea inicial era usar **Tauri** junto con [**Leptos**](https://leptos.dev/) para el frontend, creando un stack completamente basado en **Rust**. Sin embargo, en la práctica resultó ser mucho más complejo de lo esperado. Rust en el frontend es potente, pero poco agradable de trabajar.
 
-Así que decidí ir por la ruta más fácil: mantener el poder y el rendimiento de Rust para el backend, preservando Tauri, y usar **React** para el frontend. Esta vez, no necesitaría tocar tanto el código React. La IA ha sido de mucha ayuda en la programación de frontends últimamente, y atajar en este aspecto. Y funciona bastante bien para estilizar y hacer todo el boilerplate que detesto.
+Así que opté por un enfoque más práctico: mantener Rust en el backend, seguir usando Tauri y utilizar **React** para el frontend. De esta forma, apenas tuve que tocar el código de React. Las herramientas de IA han sido de gran ayuda últimamente para el desarrollo frontend, especialmente para el estilo y todo el boilerplate que no disfruto escribir.
 
-Fue simplemente la combinación perfecta.
+Fue, sencillamente, la combinación perfecta.
 
-## Lo que ganamos con esto
+## Lo que ganamos con este cambio
 
-A estas alturas, es bastante obvio que el camino ha sido muy arduo. Intenté al máximo hacer que Python funcionara, por mi amor al lenguaje, pero simplemente no funcionó. Algún día todavía quiero escribir algo sólido así en Python.
+Llegados a este punto, es evidente que el camino fue largo y complicado. Intenté por todos los medios hacer que Python funcionara, por el cariño que le tengo al lenguaje, pero simplemente no era la mejor opción. Aun así, espero poder construir algo igual de sólido en Python algún día.
 
-Al final, cambiamos una solución monstruosa de FastAPI + SQLModel + Pywebview + HTMX + Jinja2 + AlpineJS + uvicorn, por algo que era simplemente Tauri + Rust + React. Mucho más simple, robusto y probado en batalla.
+Al final, dejamos atrás una solución enorme y compleja basada en FastAPI + SQLModel + Pywebview + HTMX + Jinja2 + AlpineJS + uvicorn, y la reemplazamos por algo mucho más sencillo: Tauri + Rust + React. Más simple, más robusto y probado en la práctica.
 
-No solo recuperé mi cordura, sino que también gané mucha más estabilidad, rendimiento, y una mejor experiencia general para el usuario final. Los desarrolladores también podrán contribuir y entender el proyecto fácilmente.
+No solo recuperé la cordura, sino que también obtuvimos mucha más estabilidad, mejor rendimiento y una experiencia general mucho mejor para el usuario final. Además, ahora es mucho más fácil para otros desarrolladores entender el proyecto y contribuir a él.
 
-En el stack anterior, tenías que usar [**uv**](https://docs.astral.sh/uv/) para configurar el proyecto e instalar las dependencias, y ejecutar algunos scripts que había preparado para iniciar el servidor y el frontend.
+Con el stack anterior, era necesario usar [**uv**](https://docs.astral.sh/uv/) para instalar dependencias y ejecutar varios scripts para arrancar el backend y el frontend.
 
-Con el nuevo stack, todavía necesitas tener Rust y NodeJS instalados, pero simplemente ejecutando `npm run tauri dev`, inicias todo lo que necesitas para desarrollar el proyecto, con hot-reloading habilitado (que no estaba disponible en el stack anterior). Simplemente una experiencia de desarrollador maravillosa.
+Con el nuevo stack, basta con tener Rust y NodeJS instalados y ejecutar `npm run tauri dev` para iniciar todo el entorno de desarrollo, con hot-reloading incluido, algo que antes no estaba disponible. Una experiencia de desarrollo realmente excelente.
 
-## Mirando hacia adelante
+## Mirando hacia el futuro
 
-La reescritura en Rust no fue solo una actualización técnica: fue la base para todo lo que queremos construir. Mucho más sólido, con rendimiento estable, una mejor experiencia de desarrollador y una interfaz hermosa para el usuario final.
+La reescritura en Rust no fue solo una mejora técnica. Es la base sobre la que construiremos todo lo que viene: mayor estabilidad, mejor rendimiento, una excelente experiencia para desarrolladores y una interfaz cuidada para los usuarios.
 
-El juego aún está en desarrollo temprano, pero la base es sólida. Estamos emocionados por lo que viene.
+El juego aún se encuentra en una etapa temprana, pero los cimientos son sólidos. Estamos muy ilusionados con lo que viene a continuación.

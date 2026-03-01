@@ -1,20 +1,45 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { defaultLang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+const lang = defaultLang;
+const t = useTranslations(lang);
+
+const features = [
+  { title: t('about.features.squad.title'), desc: t('about.features.squad.desc') },
+  { title: t('about.features.matches.title'), desc: t('about.features.matches.desc') },
+  { title: t('about.features.training.title'), desc: t('about.features.training.desc') },
+  { title: t('about.features.staff.title'), desc: t('about.features.staff.desc') },
+  { title: t('about.features.leagues.title'), desc: t('about.features.leagues.desc') },
+  { title: t('about.features.finances.title'), desc: t('about.features.finances.desc') },
+  { title: t('about.features.news.title'), desc: t('about.features.news.desc') },
+  { title: t('about.features.mod.title'), desc: t('about.features.mod.desc') },
+];
+
+const faqs = [
+  { q: t('about.faq.download.q'), a: t('about.faq.download.a') },
+  { q: t('about.faq.3d.q'), a: t('about.faq.3d.a') },
+  { q: t('about.faq.ai.q'), a: t('about.faq.ai.a') },
+  { q: t('about.faq.release.q'), a: t('about.faq.release.a') },
+  { q: t('about.faq.platforms.q'), a: t('about.faq.platforms.a') },
+  { q: t('about.faq.affiliated.q'), a: t('about.faq.affiliated.a') },
+];
 ---
 
-<BaseLayout title="About — Openfoot Manager" description="Learn about Openfoot Manager, the free open-source football management simulation game.">
+<BaseLayout title={`${t('about.badge')} — Openfoot Manager`} description={t('about.subtitle')} lang={lang}>
   <!-- Hero -->
   <section class="relative pt-32 pb-16 bg-gradient-to-b from-emerald-950 to-slate-950">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
         <span class="inline-block px-4 py-1.5 text-xs font-heading font-bold uppercase tracking-widest text-emerald-400 bg-emerald-900/30 rounded-full mb-4">
-          About
+          {t('about.badge')}
         </span>
         <h1 class="font-heading text-4xl md:text-6xl font-bold uppercase text-white mb-6">
-          The Story Behind<br /><span class="text-amber-400">Openfoot Manager</span>
+          {t('about.heading.line1')}<br /><span class="text-amber-400">{t('about.heading.line2')}</span>
         </h1>
         <p class="text-lg text-emerald-100/70 leading-relaxed max-w-2xl">
-          A passion project born from the love of football and open-source software.
+          {t('about.subtitle')}
         </p>
       </div>
     </div>
@@ -28,60 +53,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <!-- What is it -->
         <div>
           <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-6">
-            What is Openfoot Manager?
+            {t('about.what.title')}
           </h2>
           <div class="space-y-4 text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            <p>
-              <strong>Openfoot Manager</strong> is a desktop football management simulation where you take the role of
-              a football club manager. You make tactical decisions, manage your squad, handle finances, hire staff,
-              configure training, and watch matches unfold minute-by-minute. All powered by a sophisticated match
-              engine written in Rust.
-            </p>
-            <p>
-              Unlike commercial alternatives, Openfoot Manager is completely <strong>free</strong>,
-              <strong>open source</strong>, and <strong>fully offline</strong>, no internet connection,
-              no microtransactions, no DRM. The game is designed to be moddable, with externalized data files
-              that let the community create custom leagues, teams, and player databases.
-            </p>
+            <p set:html={t('about.what.p1')} />
+            <p set:html={t('about.what.p2')} />
           </div>
         </div>
 
         <!-- Origin story -->
         <div>
           <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-6">
-            How It Started
+            {t('about.origin.title')}
           </h2>
           <div class="space-y-4 text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            <p>
-              This project was inspired by <a href="https://bygfoot.sourceforge.io/new/" class="text-emerald-600 dark:text-emerald-400 underline underline-offset-2 hover:text-emerald-500" target="_blank" rel="noopener noreferrer">Bygfoot</a>,
-              a free and open-source football management game written in C with a GTK 2 interface.
-              While Bygfoot showed that open-source football management was possible, it had become
-              outdated and was no longer actively maintained.
-            </p>
-            <p>
-              In 2020, the project began as a hobby project written in Python. After several rewrites
-              and years of learning, it evolved into the current Rust-based implementation with a
-              modern React frontend, using Tauri for cross-platform desktop distribution.
-            </p>
+            <p set:html={t('about.origin.p1')} />
+            <p>{t('about.origin.p2')}</p>
           </div>
         </div>
 
         <!-- Features highlight -->
         <div>
           <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-6">
-            What Can You Do?
+            {t('about.features.title')}
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              { title: 'Manage Your Squad', desc: 'Pick formations, set tactics, choose play styles, and assign set piece takers.' },
-              { title: 'Watch Live Matches', desc: 'Minute-by-minute simulation with broadcast-style UI, live stats, and speed controls.' },
-              { title: 'Train Your Players', desc: '6 training focuses, 3 intensity levels, age-based progression, and staff bonuses.' },
-              { title: 'Hire Staff', desc: 'Coaches, physios, and scouts — each with specializations that impact gameplay.' },
-              { title: 'Compete in Leagues', desc: '16-team double round-robin with live standings, fixture calendar, and results.' },
-              { title: 'Handle Finances', desc: 'Manage budgets, wages, transfers, and loans to keep your club sustainable.' },
-              { title: 'Read the News', desc: 'Procedurally generated match reports, transfer rumors, injury updates, and editorials.' },
-              { title: 'Mod the Game', desc: 'Create custom leagues, teams, and players with externalized JSON data files.' },
-            ].map((item) => (
+            {features.map((item) => (
               <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
                 <h3 class="font-heading text-lg font-bold uppercase text-slate-900 dark:text-white mb-1">
                   {item.title}
@@ -95,20 +92,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <!-- Tech -->
         <div>
           <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-6">
-            Technology
+            {t('about.tech.title')}
           </h2>
           <div class="space-y-4 text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            <p>
-              The game is built with a modern technology stack designed for performance, reliability,
-              and developer experience:
-            </p>
+            <p>{t('about.tech.intro')}</p>
             <ul class="space-y-2 pl-6 list-disc">
-              <li><strong>Rust</strong>: The game engine, delivering memory-safe, blazing-fast match simulation.</li>
-              <li><strong>React 19 + TypeScript</strong>: The user interface, with a broadcast-style "Matchday" design.</li>
-              <li><strong>Tauri v2</strong>: The desktop shell, producing lightweight cross-platform binaries.</li>
-              <li><strong>SQLite</strong>: Save game persistence with multiple save slots.</li>
-              <li><strong>Tailwind CSS</strong>: Utility-first styling with dark/light theme support.</li>
-              <li><strong>i18next</strong>: Internationalization with 5 languages.</li>
+              <li set:html={t('about.tech.rust')} />
+              <li set:html={t('about.tech.react')} />
+              <li set:html={t('about.tech.tauri')} />
+              <li set:html={t('about.tech.sqlite')} />
+              <li set:html={t('about.tech.tailwind')} />
+              <li set:html={t('about.tech.i18n')} />
             </ul>
           </div>
         </div>
@@ -116,17 +110,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <!-- Contributing -->
         <div>
           <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-6">
-            How to Contribute
+            {t('about.contribute.title')}
           </h2>
           <div class="space-y-4 text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            <p>
-              Openfoot Manager is a community-driven project and contributions are welcome from everyone:
-            </p>
+            <p>{t('about.contribute.intro')}</p>
             <ul class="space-y-2 pl-6 list-disc">
-              <li><strong>Report bugs</strong> or <strong>propose features</strong> via GitHub Issues.</li>
-              <li><strong>Submit code</strong> via Fork & Pull workflow to the <code class="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-sm">develop</code> branch.</li>
-              <li><strong>Create content</strong> — custom databases, translations, logos, documentation.</li>
-              <li><strong>Spread the word</strong> — star the repo, share on social media, tell friends.</li>
+              <li set:html={t('about.contribute.bugs')} />
+              <li set:html={t('about.contribute.code')} />
+              <li set:html={t('about.contribute.content')} />
+              <li set:html={t('about.contribute.spread')} />
             </ul>
             <div class="flex flex-wrap gap-4 pt-4">
               <a
@@ -138,7 +130,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                 </svg>
-                View on GitHub
+                {t('about.contribute.github')}
               </a>
               <a
                 href="https://github.com/openfootmanager/openfootmanager/blob/develop/CONTRIBUTING.md"
@@ -146,7 +138,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-2 px-6 py-3 border-2 border-slate-300 dark:border-slate-700 hover:border-emerald-500 text-slate-700 dark:text-slate-300 font-heading font-bold uppercase tracking-wider rounded-xl transition-all duration-200"
               >
-                Contributing Guide
+                {t('about.contribute.guide')}
               </a>
             </div>
           </div>
@@ -155,35 +147,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <!-- FAQ -->
         <div>
           <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-6">
-            Frequently Asked Questions
+            {t('about.faq.title')}
           </h2>
           <div class="space-y-4">
-            {[
-              {
-                q: 'Where can I download the game?',
-                a: 'The game is currently in active early development (v0.1.0 alpha). There is no public release yet. Follow the GitHub repository for release announcements, or check back on this blog.',
-              },
-              {
-                q: 'Can I see matches in 3D?',
-                a: 'Currently, matches are simulated with a broadcast-style UI showing live events, stats, and commentary. A 3D match viewer is not planned for the initial release, but could be explored in the future.',
-              },
-              {
-                q: 'Does this project use AI?',
-                a: "Yes. The project received generative AI assistance, from both Google Antigravity and Claude Opus 4.6. Without this assistance, the project would not evolve rapidly enough to reach a public alpha release. AI helped iterate faster on boilerplate code, documentation, content generation, translation and experimentation with UI and engine features. However, the code was thoroughly reviewed and audited by human developers to ensure it met the project's quality standards."
-              },
-              {
-                q: 'When is version 1.0 coming out?',
-                a: 'There is no fixed release date. The project is developed by a solo developer in spare time. Contributions from the community are welcome and will help accelerate development.',
-              },
-              {
-                q: 'What platforms are supported?',
-                a: 'Openfoot Manager targets Windows, macOS, and Linux via Tauri. A single codebase produces native binaries for all three platforms.',
-              },
-              {
-                q: 'Is this affiliated with Football Manager™?',
-                a: 'No. Openfoot Manager is an independent, community-driven open-source project. It is not affiliated with, endorsed by, or related to any commercial football management game.',
-              },
-            ].map((faq) => (
+            {faqs.map((faq) => (
               <details class="group rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
                 <summary class="flex items-center justify-between p-5 cursor-pointer font-heading font-bold text-lg uppercase text-slate-900 dark:text-white">
                   {faq.q}
