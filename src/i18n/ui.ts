@@ -1,6 +1,6 @@
 export const languages = {
   en: 'English',
-  'pt-br': 'Português',
+  'pt-br': 'Português (Brasil)',
   es: 'Español',
   fr: 'Français',
   de: 'Deutsch',
