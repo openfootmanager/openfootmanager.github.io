@@ -22,6 +22,7 @@ export function getDateLocale(lang: Lang): string {
   const map: Record<Lang, string> = {
     en: 'en-US',
     'pt-br': 'pt-BR',
+    'pt-pt': 'pt-PT',
     es: 'es-ES',
     fr: 'fr-FR',
     de: 'de-DE',
@@ -33,6 +34,7 @@ export function getHtmlLang(lang: Lang): string {
   const map: Record<Lang, string> = {
     en: 'en',
     'pt-br': 'pt-BR',
+    'pt-pt': 'pt-PT',
     es: 'es',
     fr: 'fr',
     de: 'de',
@@ -41,7 +43,7 @@ export function getHtmlLang(lang: Lang): string {
 }
 
 export function getBaseSlug(slug: string): string {
-  const langPrefixes = ['pt-br/', 'es/', 'fr/', 'de/'];
+  const langPrefixes = ['pt-br/', 'pt-pt/', 'es/', 'fr/', 'de/'];
   for (const prefix of langPrefixes) {
     if (slug.startsWith(prefix)) {
       return slug.slice(prefix.length);

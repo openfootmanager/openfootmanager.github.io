@@ -10,7 +10,7 @@ const currentLang = Astro.props.lang ?? defaultLang;
 
 // Get the current path without the lang prefix
 const pathname = Astro.url.pathname;
-const pathWithoutLang = pathname.replace(/^\/(pt-br|es|fr|de)(\/|$)/, '/');
+const pathWithoutLang = pathname.replace(/^\/(pt-br|pt-pt|es|fr|de)(\/|$)/, '/');
 
 function getPathForLang(targetLang: Lang): string {
   if (targetLang === defaultLang) return pathWithoutLang || '/';
@@ -20,10 +20,9 @@ function getPathForLang(targetLang: Lang): string {
 const langEntries = Object.entries(languages) as [Lang, string][];
 ---
 
-<div class="relative" id="lang-switcher">
+<div class="lang-switcher relative">
   <button
-    id="lang-btn"
-    class="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-heading font-semibold uppercase tracking-wider text-slate-300 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+    class="lang-btn flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-heading font-semibold uppercase tracking-wider text-slate-300 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
     aria-label="Change language"
   >
     <Icon name="lucide:globe" class="w-4 h-4" />
@@ -32,8 +31,7 @@ const langEntries = Object.entries(languages) as [Lang, string][];
   </button>
 
   <div
-    id="lang-dropdown"
-    class="hidden absolute right-0 top-full mt-2 w-[14rem] bg-slate-900 border border-slate-700 rounded-xl shadow-xl overflow-hidden z-50"
+    class="lang-dropdown hidden absolute right-0 top-full mt-2 w-[14rem] bg-slate-900 border border-slate-700 rounded-xl shadow-xl overflow-hidden z-50"
   >
     {langEntries.map(([code, name]) => (
       <a
@@ -53,15 +51,23 @@ const langEntries = Object.entries(languages) as [Lang, string][];
 </div>
 
 <script>
-  const btn = document.getElementById('lang-btn');
-  const dropdown = document.getElementById('lang-dropdown');
+  document.querySelectorAll('.lang-switcher').forEach((switcher) => {
+    const btn = switcher.querySelector('.lang-btn');
+    const dropdown = switcher.querySelector('.lang-dropdown');
 
-  btn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    dropdown?.classList.toggle('hidden');
+    btn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Close all other dropdowns first
+      document.querySelectorAll('.lang-dropdown').forEach((d) => {
+        if (d !== dropdown) d.classList.add('hidden');
+      });
+      dropdown?.classList.toggle('hidden');
+    });
   });
 
   document.addEventListener('click', () => {
-    dropdown?.classList.add('hidden');
+    document.querySelectorAll('.lang-dropdown').forEach((d) => {
+      d.classList.add('hidden');
+    });
   });
 </script>

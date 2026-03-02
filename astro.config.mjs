@@ -8,7 +8,7 @@ export default defineConfig({
   site: 'https://openfootmanager.com',
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'pt-br', 'es', 'fr', 'de'],
+    locales: ['en', 'pt-br', 'pt-pt', 'es', 'fr', 'de'],
     routing: {
       prefixDefaultLocale: false,
     },
