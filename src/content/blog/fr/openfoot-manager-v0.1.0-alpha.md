@@ -4,7 +4,7 @@ description: "La première version alpha publique d'Openfoot Manager est enfin d
 pubDate: 2026-03-02T16:54:00.000Z
 author: "Sturdy Robot"
 tags: ["sortie", "annonce"]
-image: "/crowd.jpg"
+image: "/images/v0.1.0-alpha-start-screen.PNG"
 lang: "fr"
 ---
 
@@ -40,7 +40,6 @@ Et le jeu entier est **entièrement traduit en 6 langues** : anglais, portugais 
 Soyons honnêtes sur ce qui manque. C'est une alpha, et ça se voit :
 
 - **Pas de compétitions de coupe.** Il n'y a que le championnat pour le moment.
-- **Pas de centre de formation.** Vous ne pouvez pas encore développer de jeunes talents via un système de formation.
 - **Pas d'interactions avec les joueurs.** Les joueurs ne viennent pas vous voir avec des plaintes ou des demandes.
 - **Pas de système de recrutement détaillé.** Les recruteurs existent, mais le système est assez basique. Vous ne pouvez pas encore envoyer des recruteurs observer des joueurs ou des ligues spécifiques.
 - **Pas de visionneuse 3D.** Les matchs sont en texte avec une interface de retransmission. Pas de visualisation du terrain pour l'instant.

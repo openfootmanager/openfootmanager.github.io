@@ -4,7 +4,7 @@ description: "The first public alpha release of Openfoot Manager is finally avai
 pubDate: 2026-03-02T16:54:00.000Z
 author: "Sturdy Robot"
 tags: ["release", "announcement"]
-image: "/crowd.jpg"
+image: "/images/v0.1.0-alpha-start-screen.PNG"
 ---
 
 I can't believe I'm actually writing this.
@@ -39,7 +39,6 @@ And the whole thing is **fully localized in 6 languages**: English, Brazilian Po
 Let me be honest about what's missing. This is an alpha, and it shows:
 
 - **No cup competitions.** It's just the league for now.
-- **No youth academy.** You can't develop young talent through an academy system yet.
 - **No player interactions.** Players don't come to you with complaints or requests.
 - **No detailed scouting.** Scouts exist, but the scouting system is pretty basic. You can't send scouts to watch specific players or leagues yet.
 - **No 3D match viewer.** Matches are text-based with a broadcast UI. No pitch visualization yet.

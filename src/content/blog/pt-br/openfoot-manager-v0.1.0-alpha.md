@@ -4,7 +4,7 @@ description: "A primeira versão alfa pública do Openfoot Manager finalmente es
 pubDate: 2026-03-02T16:54:00.000Z
 author: "Sturdy Robot"
 tags: ["lançamento", "anúncio"]
-image: "/crowd.jpg"
+image: "/images/v0.1.0-alpha-start-screen.PNG"
 lang: "pt-br"
 ---
 
@@ -40,7 +40,6 @@ E o jogo todo é **totalmente traduzido em 6 idiomas**: inglês, português bras
 Vou ser honesto sobre o que está faltando. Isso é uma versão alfa, e dá pra notar:
 
 - **Sem copas.** É só a liga por enquanto.
-- **Sem categorias de base.** Ainda não dá pra desenvolver jovens talentos através de um sistema de base.
 - **Sem interações com jogadores.** Os jogadores não vêm até você com reclamações ou pedidos.
 - **Sem sistema de olheiros detalhado.** Olheiros existem, mas o sistema é bem básico. Ainda não dá pra enviar olheiros para observar jogadores ou ligas específicas.
 - **Sem visualização 3D.** As partidas são baseadas em texto com uma interface de transmissão. Sem visualização do campo ainda.
