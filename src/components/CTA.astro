@@ -27,11 +27,13 @@ const t = useTranslations(lang);
     </p>
     <div class="flex flex-wrap justify-center gap-4">
       <a
-        href={getLocalePath(lang, '/download')}
+        href="https://github.com/openfootmanager/openfootmanager/blob/develop/CONTRIBUTING.md"
+        target="_blank"
+        rel="noopener noreferrer"
         class="inline-flex items-center gap-2 px-8 py-4 bg-white text-emerald-900 font-heading text-lg font-bold uppercase tracking-wider rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
       >
-        <Icon name="lucide:download" class="w-5 h-5" />
-        {t('nav.download')}
+        <Icon name="lucide:code" class="w-5 h-5" />
+        {t('cta.contribute')}
       </a>
       <a
         href="https://github.com/openfootmanager/openfootmanager"

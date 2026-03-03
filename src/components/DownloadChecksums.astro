@@ -1,0 +1,67 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import { allDownloads } from '../data/downloads';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div>
+  <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-3">
+    {t('download.checksums.title')}
+  </h2>
+  <p class="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+    {t('download.checksums.description')}
+  </p>
+
+  <!-- How to verify -->
+  <div class="mb-6 space-y-3">
+    <h3 class="font-heading text-lg font-bold uppercase text-slate-800 dark:text-slate-200">
+      {t('download.checksums.howto.title')}
+    </h3>
+    <div class="space-y-2">
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+        <Icon name="lucide:monitor" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+        <p class="text-sm" set:html={t('download.checksums.howto.windows')} />
+      </div>
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+        <Icon name="lucide:laptop" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+        <p class="text-sm" set:html={t('download.checksums.howto.macos')} />
+      </div>
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+        <Icon name="lucide:terminal" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+        <p class="text-sm" set:html={t('download.checksums.howto.linux')} />
+      </div>
+    </div>
+  </div>
+
+  <!-- Checksums table -->
+  <div class="rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="hidden sm:flex bg-slate-100 dark:bg-slate-800/50 px-4 py-2.5 text-xs font-heading font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+      <div class="w-2/5">{t('download.checksums.file')}</div>
+      <div class="w-3/5">{t('download.checksums.sha')}</div>
+    </div>
+    {allDownloads.map((dl, i) => (
+      <div class:list={[
+        'flex flex-col sm:flex-row gap-1 sm:gap-0 px-4 py-3 text-sm',
+        i !== allDownloads.length - 1 && 'border-b border-slate-100 dark:border-slate-800',
+        i % 2 === 0 ? 'bg-white dark:bg-slate-950' : 'bg-slate-50/50 dark:bg-slate-900/30',
+      ]}>
+        <div class="sm:w-2/5 font-medium text-slate-800 dark:text-slate-200 truncate">
+          {dl.filename}
+        </div>
+        <div class="sm:w-3/5">
+          <code class="text-xs text-slate-500 dark:text-slate-400 break-all font-mono leading-relaxed select-all">
+            {dl.sha256}
+          </code>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

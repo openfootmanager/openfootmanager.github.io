@@ -42,6 +42,34 @@ export function getHtmlLang(lang: Lang): string {
   return map[lang];
 }
 
+export function formatReleaseDate(date: Date, lang: Lang): string {
+  const locale = getDateLocale(lang);
+
+  if (lang === 'en') {
+    const month = date.toLocaleDateString(locale, { month: 'long' });
+    const day = date.getDate();
+    const year = date.getFullYear();
+    const ordinal = getOrdinalSuffix(day);
+    return `${month} ${day}${ordinal}, ${year}`;
+  }
+
+  return date.toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+function getOrdinalSuffix(day: number): string {
+  if (day >= 11 && day <= 13) return 'th';
+  switch (day % 10) {
+    case 1: return 'st';
+    case 2: return 'nd';
+    case 3: return 'rd';
+    default: return 'th';
+  }
+}
+
 export function getBaseSlug(slug: string): string {
   const langPrefixes = ['pt-br/', 'pt-pt/', 'es/', 'fr/', 'de/'];
   for (const prefix of langPrefixes) {

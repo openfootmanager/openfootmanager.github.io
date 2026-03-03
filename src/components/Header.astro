@@ -16,8 +16,9 @@ const navLinks = [
   { href: getLocalePath(lang, '/#features'), label: t('nav.features') },
   { href: getLocalePath(lang, '/blog'), label: t('nav.blog') },
   { href: getLocalePath(lang, '/about'), label: t('nav.about') },
-  { href: getLocalePath(lang, '/download'), label: t('nav.download') },
 ];
+
+const downloadLink = { href: getLocalePath(lang, '/download'), label: t('nav.download') };
 ---
 
 <header id="main-header" class="fixed top-0 w-full z-50 transition-all duration-300">
@@ -41,6 +42,13 @@ const navLinks = [
             {link.label}
           </a>
         ))}
+        <a
+          href={downloadLink.href}
+          class="px-4 py-2 text-sm font-heading font-bold uppercase tracking-wider text-white bg-emerald-500 hover:bg-emerald-400 rounded-lg transition-all duration-200 shadow-md shadow-emerald-500/25 flex items-center gap-1.5"
+        >
+          <Icon name="lucide:download" class="w-4 h-4" />
+          {downloadLink.label}
+        </a>
         <a
           href="https://github.com/openfootmanager/openfootmanager"
           target="_blank"
@@ -83,6 +91,13 @@ const navLinks = [
           {link.label}
         </a>
       ))}
+      <a
+        href={downloadLink.href}
+        class="flex items-center gap-2 px-4 py-3 text-sm font-heading font-bold uppercase tracking-wider text-white bg-emerald-500 hover:bg-emerald-400 rounded-lg transition-all duration-200"
+      >
+        <Icon name="lucide:download" class="w-4 h-4" />
+        {downloadLink.label}
+      </a>
       <a
         href="https://github.com/openfootmanager/openfootmanager"
         target="_blank"
