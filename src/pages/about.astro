@@ -2,19 +2,20 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { defaultLang } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
+import { Icon } from 'astro-icon/components';
 
 const lang = defaultLang;
 const t = useTranslations(lang);
 
 const features = [
-  { title: t('about.features.squad.title'), desc: t('about.features.squad.desc') },
-  { title: t('about.features.matches.title'), desc: t('about.features.matches.desc') },
-  { title: t('about.features.training.title'), desc: t('about.features.training.desc') },
-  { title: t('about.features.staff.title'), desc: t('about.features.staff.desc') },
-  { title: t('about.features.leagues.title'), desc: t('about.features.leagues.desc') },
-  { title: t('about.features.finances.title'), desc: t('about.features.finances.desc') },
-  { title: t('about.features.news.title'), desc: t('about.features.news.desc') },
-  { title: t('about.features.mod.title'), desc: t('about.features.mod.desc') },
+  { title: t('about.features.squad.title'), desc: t('about.features.squad.desc'), icon: 'lucide:users' },
+  { title: t('about.features.matches.title'), desc: t('about.features.matches.desc'), icon: 'lucide:monitor-play' },
+  { title: t('about.features.training.title'), desc: t('about.features.training.desc'), icon: 'lucide:dumbbell' },
+  { title: t('about.features.staff.title'), desc: t('about.features.staff.desc'), icon: 'lucide:briefcase' },
+  { title: t('about.features.leagues.title'), desc: t('about.features.leagues.desc'), icon: 'lucide:trophy' },
+  { title: t('about.features.finances.title'), desc: t('about.features.finances.desc'), icon: 'lucide:coins' },
+  { title: t('about.features.news.title'), desc: t('about.features.news.desc'), icon: 'lucide:newspaper' },
+  { title: t('about.features.mod.title'), desc: t('about.features.mod.desc'), icon: 'lucide:wrench' },
 ];
 
 const faqs = [
@@ -79,11 +80,16 @@ const faqs = [
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             {features.map((item) => (
-              <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
-                <h3 class="font-heading text-lg font-bold uppercase text-slate-900 dark:text-white mb-1">
-                  {item.title}
-                </h3>
-                <p class="text-sm text-slate-600 dark:text-slate-400">{item.desc}</p>
+              <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex items-start gap-4">
+                <div class="p-3 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-lg shrink-0">
+                  <Icon name={item.icon} class="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 class="font-heading text-lg font-bold uppercase text-slate-900 dark:text-white mb-1">
+                    {item.title}
+                  </h3>
+                  <p class="text-sm text-slate-600 dark:text-slate-400">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -94,16 +100,30 @@ const faqs = [
           <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-6">
             {t('about.tech.title')}
           </h2>
-          <div class="space-y-4 text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            <p>{t('about.tech.intro')}</p>
-            <ul class="space-y-2 pl-6 list-disc">
-              <li set:html={t('about.tech.rust')} />
-              <li set:html={t('about.tech.react')} />
-              <li set:html={t('about.tech.tauri')} />
-              <li set:html={t('about.tech.sqlite')} />
-              <li set:html={t('about.tech.tailwind')} />
-              <li set:html={t('about.tech.i18n')} />
-            </ul>
+          <p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
+            {t('about.tech.intro')}
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { id: 'rust', icon: 'lucide:cpu' },
+              { id: 'react', icon: 'lucide:code-2' },
+              { id: 'tauri', icon: 'lucide:app-window' },
+              { id: 'sqlite', icon: 'lucide:database' },
+              { id: 'tailwind', icon: 'lucide:paintbrush' },
+              { id: 'i18n', icon: 'lucide:globe' }
+            ].map((tech) => (
+              <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex items-start gap-4">
+                <div class="p-3 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-lg shrink-0">
+                  <Icon name={tech.icon} class="w-6 h-6" />
+                </div>
+                <div class="flex-1">
+                  <span 
+                    class="text-sm text-slate-600 dark:text-slate-400 [&>strong]:font-heading [&>strong]:text-lg [&>strong]:uppercase [&>strong]:text-slate-900 [&>strong]:dark:text-white [&>strong]:block [&>strong]:mb-1" 
+                    set:html={t(`about.tech.${tech.id}` as any).replace(/<\/strong>\s*[:\-—]\s*/, '</strong>')} 
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -112,15 +132,41 @@ const faqs = [
           <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-6">
             {t('about.contribute.title')}
           </h2>
-          <div class="space-y-4 text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            <p>{t('about.contribute.intro')}</p>
-            <ul class="space-y-2 pl-6 list-disc">
-              <li set:html={t('about.contribute.bugs')} />
-              <li set:html={t('about.contribute.code')} />
-              <li set:html={t('about.contribute.content')} />
-              <li set:html={t('about.contribute.spread')} />
-            </ul>
-            <div class="flex flex-wrap gap-4 pt-4">
+          <p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
+            {t('about.contribute.intro')}
+          </p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <a href="https://github.com/openfootmanager/openfootmanager/issues" target="_blank" rel="noopener noreferrer" class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all flex items-start gap-4 group">
+              <div class="p-3 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-lg shrink-0 group-hover:scale-110 transition-transform">
+                <Icon name="lucide:bug" class="w-6 h-6" />
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed pt-1 [&>strong]:text-slate-900 [&>strong]:dark:text-slate-200" set:html={t('about.contribute.bugs')} />
+            </a>
+            
+            <a href="https://github.com/openfootmanager/openfootmanager/pulls" target="_blank" rel="noopener noreferrer" class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all flex items-start gap-4 group">
+              <div class="p-3 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-lg shrink-0 group-hover:scale-110 transition-transform">
+                <Icon name="lucide:git-pull-request" class="w-6 h-6" />
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed pt-1 [&>strong]:text-slate-900 [&>strong]:dark:text-slate-200 [&_code]:text-xs" set:html={t('about.contribute.code')} />
+            </a>
+
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex items-start gap-4">
+              <div class="p-3 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-lg shrink-0">
+                <Icon name="lucide:palette" class="w-6 h-6" />
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed pt-1 [&>strong]:text-slate-900 [&>strong]:dark:text-slate-200" set:html={t('about.contribute.content')} />
+            </div>
+
+            <a href="https://github.com/openfootmanager/openfootmanager" target="_blank" rel="noopener noreferrer" class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all flex items-start gap-4 group">
+              <div class="p-3 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-lg shrink-0 group-hover:scale-110 transition-transform">
+                <Icon name="lucide:share-2" class="w-6 h-6" />
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed pt-1 [&>strong]:text-slate-900 [&>strong]:dark:text-slate-200" set:html={t('about.contribute.spread')} />
+            </a>
+          </div>
+
+          <div class="flex flex-wrap gap-4">
               <a
                 href="https://github.com/openfootmanager/openfootmanager"
                 target="_blank"
@@ -141,12 +187,11 @@ const faqs = [
                 {t('about.contribute.guide')}
               </a>
             </div>
-          </div>
         </div>
 
         <!-- FAQ -->
         <div>
-          <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-6">
+          <h2 class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mt-8 mb-6">
             {t('about.faq.title')}
           </h2>
           <div class="space-y-4">
