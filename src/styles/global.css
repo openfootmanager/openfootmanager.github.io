@@ -10,6 +10,63 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
+
+  :root {
+    --cc-font-family: 'Inter', sans-serif;
+    --cc-bg: theme('colors.white');
+    --cc-text: theme('colors.slate.700');
+    --cc-btn-primary-bg: theme('colors.emerald.600');
+    --cc-btn-primary-text: theme('colors.white');
+    --cc-btn-primary-hover-bg: theme('colors.emerald.700');
+    --cc-btn-secondary-bg: theme('colors.slate.100');
+    --cc-btn-secondary-text: theme('colors.slate.700');
+    --cc-btn-secondary-hover-bg: theme('colors.slate.200');
+    --cc-toggle-on-bg: theme('colors.emerald.600');
+    --cc-toggle-off-bg: theme('colors.slate.300');
+    --cc-toggle-on-dial-bg: theme('colors.white');
+    --cc-toggle-off-dial-bg: theme('colors.white');
+    --cc-toggle-readonly-bg: theme('colors.slate.200');
+    --cc-toggle-readonly-knob-bg: theme('colors.slate.400');
+    --cc-toggle-readonly-knob-icon-color: theme('colors.slate.400');
+    --cc-block-text: theme('colors.slate.600');
+    --cc-cookie-category-block-bg: theme('colors.slate.50');
+    --cc-cookie-category-block-bg-hover: theme('colors.slate.100');
+    --cc-section-border: theme('colors.slate.200');
+    --cc-cookie-table-border: theme('colors.slate.200');
+    --cc-overlay-bg: rgba(0, 0, 0, 0.4);
+    --cc-webkit-scrollbar-bg: theme('colors.slate.100');
+    --cc-webkit-scrollbar-bg-hover: theme('colors.slate.200');
+    --cc-primary-color: theme('colors.emerald.600');
+    --cc-btn-border-radius: 0.5rem;
+    --cc-modal-border-radius: 0.75rem;
+  }
+
+  .dark {
+    --cc-bg: theme('colors.slate.900');
+    --cc-text: theme('colors.slate.300');
+    --cc-btn-primary-bg: theme('colors.emerald.600');
+    --cc-btn-primary-text: theme('colors.white');
+    --cc-btn-primary-hover-bg: theme('colors.emerald.500');
+    --cc-btn-secondary-bg: theme('colors.slate.800');
+    --cc-btn-secondary-text: theme('colors.slate.300');
+    --cc-btn-secondary-hover-bg: theme('colors.slate.700');
+    --cc-toggle-on-bg: theme('colors.emerald.500');
+    --cc-toggle-off-bg: theme('colors.slate.700');
+    --cc-toggle-on-dial-bg: theme('colors.slate.900');
+    --cc-toggle-off-dial-bg: theme('colors.slate.400');
+    --cc-toggle-readonly-bg: theme('colors.slate.800');
+    --cc-toggle-readonly-knob-bg: theme('colors.slate.600');
+    --cc-toggle-readonly-knob-icon-color: theme('colors.slate.600');
+    --cc-block-text: theme('colors.slate.400');
+    --cc-cookie-category-block-bg: theme('colors.slate.800');
+    --cc-cookie-category-block-bg-hover: theme('colors.slate.800');
+    --cc-section-border: theme('colors.slate.800');
+    --cc-cookie-table-border: theme('colors.slate.800');
+    --cc-overlay-bg: rgba(0, 0, 0, 0.65);
+    --cc-webkit-scrollbar-bg: theme('colors.slate.800');
+    --cc-webkit-scrollbar-bg-hover: theme('colors.slate.700');
+    --cc-primary-color: theme('colors.emerald.500');
+  }
 }
 
 @layer components {

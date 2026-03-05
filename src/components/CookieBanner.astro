@@ -1,0 +1,275 @@
+---
+import 'vanilla-cookieconsent/dist/cookieconsent.css';
+import { type Lang } from '../i18n/ui';
+import { getHtmlLang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const currentHtmlLang = getHtmlLang(lang);
+---
+
+<script>
+  import * as CookieConsent from 'vanilla-cookieconsent';
+
+  CookieConsent.run({
+    guiOptions: {
+      consentModal: {
+        layout: 'box',
+        position: 'bottom right',
+        equalWeightButtons: true,
+        flipButtons: false,
+      },
+      preferencesModal: {
+        layout: 'box',
+        position: 'right',
+        equalWeightButtons: true,
+        flipButtons: false,
+      },
+    },
+    categories: {
+      necessary: {
+        readOnly: true,
+      },
+      analytics: {
+        autoClear: {
+          cookies: [
+            {
+              name: /^_ga/,
+            },
+            {
+              name: '_gid',
+            },
+          ],
+        },
+      },
+    },
+    language: {
+      default: 'en',
+      autoDetect: 'document',
+      translations: {
+        en: {
+          consentModal: {
+            title: "We use cookies!",
+            description: "We use cookies to enhance your browsing experience and analyze our traffic. By clicking \"Accept All\", you consent to our use of cookies.",
+            acceptAllBtn: "Accept All",
+            acceptNecessaryBtn: "Reject All",
+            showPreferencesBtn: "Manage preferences",
+          },
+          preferencesModal: {
+            title: "Consent Preferences Menu",
+            acceptAllBtn: "Accept All",
+            acceptNecessaryBtn: "Reject All",
+            savePreferencesBtn: "Save preferences",
+            closeIconLabel: "Close modal",
+            serviceCounterLabel: "Service|Services",
+            sections: [
+              {
+                title: "Cookie Usage",
+                description: "We use cookies to help you navigate efficiently and perform certain functions. You can find more information about all cookies under each consent category below."
+              },
+              {
+                title: "Strictly Necessary Cookies",
+                description: "These cookies are crucial for the basic functions of the website and the website will not work in its intended way without them. These cookies do not store any personally identifiable data.",
+                linkedCategory: "necessary"
+              },
+              {
+                title: "Analytics Cookies",
+                description: "Analytics cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics the number of visitors, bounce rate, traffic source, etc.",
+                linkedCategory: "analytics"
+              }
+            ]
+          }
+        },
+        'pt-BR': {
+          consentModal: {
+            title: "Nós usamos cookies!",
+            description: "Nós usamos cookies para melhorar sua experiência de navegação e analisar nosso tráfego. Ao clicar em \"Aceitar Todos\", você concorda com o uso de cookies.",
+            acceptAllBtn: "Aceitar Todos",
+            acceptNecessaryBtn: "Rejeitar Todos",
+            showPreferencesBtn: "Gerenciar preferências",
+          },
+          preferencesModal: {
+            title: "Preferências de Consentimento",
+            acceptAllBtn: "Aceitar Todos",
+            acceptNecessaryBtn: "Rejeitar Todos",
+            savePreferencesBtn: "Salvar preferências",
+            closeIconLabel: "Fechar janela",
+            sections: [
+              {
+                title: "Uso de Cookies",
+                description: "Nós usamos cookies para ajudar você a navegar eficientemente e realizar certas funções. Você pode encontrar mais informações sobre todos os cookies em cada categoria de consentimento abaixo."
+              },
+              {
+                title: "Cookies Estritamente Necessários",
+                description: "Estes cookies são essenciais para as funções básicas do site e o site não funcionará da maneira pretendida sem eles. Estes cookies não armazenam nenhum dado de identificação pessoal.",
+                linkedCategory: "necessary"
+              },
+              {
+                title: "Cookies Analíticos",
+                description: "Cookies analíticos são usados para entender como os visitantes interagem com o site. Eles ajudam a fornecer informações sobre métricas como número de visitantes, taxa de rejeição, origem do tráfego, etc.",
+                linkedCategory: "analytics"
+              }
+            ]
+          }
+        },
+        'pt-PT': {
+          consentModal: {
+            title: "Nós usamos cookies!",
+            description: "Nós usamos cookies para melhorar a sua experiência de navegação e analisar o nosso tráfego. Ao clicar em \"Aceitar Todos\", concorda com o uso de cookies.",
+            acceptAllBtn: "Aceitar Todos",
+            acceptNecessaryBtn: "Rejeitar Todos",
+            showPreferencesBtn: "Gerir preferências",
+          },
+          preferencesModal: {
+            title: "Preferências de Consentimento",
+            acceptAllBtn: "Aceitar Todos",
+            acceptNecessaryBtn: "Rejeitar Todos",
+            savePreferencesBtn: "Guardar preferências",
+            closeIconLabel: "Fechar janela",
+            sections: [
+              {
+                title: "Uso de Cookies",
+                description: "Nós usamos cookies para ajudá-lo a navegar de forma eficiente e executar certas funções. Pode encontrar mais informações sobre todos os cookies em cada categoria de consentimento abaixo."
+              },
+              {
+                title: "Cookies Estritamente Necessários",
+                description: "Estes cookies são essenciais para as funções básicas do site e o site não funcionará da maneira pretendida sem eles. Estes cookies não armazenam nenhuns dados de identificação pessoal.",
+                linkedCategory: "necessary"
+              },
+              {
+                title: "Cookies Analíticos",
+                description: "Cookies analíticos são usados para entender como os visitantes interagem com o site. Eles ajudam a fornecer informações sobre métricas como número de visitantes, taxa de rejeição, origem do tráfego, etc.",
+                linkedCategory: "analytics"
+              }
+            ]
+          }
+        },
+        es: {
+          consentModal: {
+            title: "¡Usamos cookies!",
+            description: "Usamos cookies para mejorar su experiencia de navegación y analizar nuestro tráfico. Al hacer clic en \"Aceptar Todas\", usted acepta nuestro uso de cookies.",
+            acceptAllBtn: "Aceptar Todas",
+            acceptNecessaryBtn: "Rechazar Todas",
+            showPreferencesBtn: "Gestionar preferencias",
+          },
+          preferencesModal: {
+            title: "Preferencias de Consentimiento",
+            acceptAllBtn: "Aceptar Todas",
+            acceptNecessaryBtn: "Rechazar Todas",
+            savePreferencesBtn: "Guardar preferencias",
+            closeIconLabel: "Cerrar ventana",
+            sections: [
+              {
+                title: "Uso de Cookies",
+                description: "Usamos cookies para ayudarle a navegar eficientemente y realizar ciertas funciones. Puede encontrar más información sobre todas las cookies en cada categoría de consentimiento a continuación."
+              },
+              {
+                title: "Cookies Estrictamente Necesarias",
+                description: "Estas cookies son esenciales para las funciones básicas del sitio web y el sitio web no funcionará de la forma prevista sin ellas. Estas cookies no almacenan ningún dato de identificación personal.",
+                linkedCategory: "necessary"
+              },
+              {
+                title: "Cookies Analíticas",
+                description: "Las cookies analíticas se utilizan para entender cómo interactúan los visitantes con el sitio web. Estas cookies ayudan a proporcionar información sobre métricas como el número de visitantes, tasa de rebote, fuente de tráfico, etc.",
+                linkedCategory: "analytics"
+              }
+            ]
+          }
+        },
+        fr: {
+          consentModal: {
+            title: "Nous utilisons des cookies!",
+            description: "Nous utilisons des cookies pour améliorer votre expérience de navigation et analyser notre trafic. En cliquant sur \"Tout accepter\", vous consentez à notre utilisation des cookies.",
+            acceptAllBtn: "Tout accepter",
+            acceptNecessaryBtn: "Tout refuser",
+            showPreferencesBtn: "Gérer les préférences",
+          },
+          preferencesModal: {
+            title: "Préférences de Consentement",
+            acceptAllBtn: "Tout accepter",
+            acceptNecessaryBtn: "Tout refuser",
+            savePreferencesBtn: "Enregistrer les préférences",
+            closeIconLabel: "Fermer la fenêtre",
+            sections: [
+              {
+                title: "Utilisation des Cookies",
+                description: "Nous utilisons des cookies pour vous aider à naviguer efficacement et à exécuter certaines fonctions. Vous trouverez plus d'informations sur tous les cookies sous chaque catégorie de consentement ci-dessous."
+              },
+              {
+                title: "Cookies Strictement Nécessaires",
+                description: "Ces cookies sont essentiels au fonctionnement base du site web et ce dernier ne fonctionnera pas correctement sans eux. Ces cookies n'enregistrent aucune donnée d'identification personnelle.",
+                linkedCategory: "necessary"
+              },
+              {
+                title: "Cookies Analytiques",
+                description: "Les cookies analytiques sont utilisés pour comprendre comment les visiteurs interagissent avec le site web. Ces cookies aident à fournir des informations sur des mesures telles que le nombre de visiteurs, le taux de rebond, la source de trafic, etc.",
+                linkedCategory: "analytics"
+              }
+            ]
+          }
+        },
+        de: {
+          consentModal: {
+            title: "Wir verwenden Cookies!",
+            description: "Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern und unseren Datenverkehr zu analysieren. Wenn Sie auf \"Alle akzeptieren\" klicken, stimmen Sie der Verwendung von Cookies zu.",
+            acceptAllBtn: "Alle akzeptieren",
+            acceptNecessaryBtn: "Alle ablehnen",
+            showPreferencesBtn: "Präferenzen verwalten",
+          },
+          preferencesModal: {
+            title: "Zustimmungspräferenzen",
+            acceptAllBtn: "Alle akzeptieren",
+            acceptNecessaryBtn: "Alle ablehnen",
+            savePreferencesBtn: "Präferenzen speichern",
+            closeIconLabel: "Fenster schließen",
+            sections: [
+              {
+                title: "Verwendung von Cookies",
+                description: "Wir verwenden Cookies, um Ihnen zu helfen, effizient zu navigieren und bestimmte Funktionen auszuführen. Weitere Informationen zu allen Cookies finden Sie unten unter jeder Einwilligungskategorie."
+              },
+              {
+                title: "Unbedingt Notwendige Cookies",
+                description: "Diese Cookies sind für die Grundfunktionen der Website unerlässlich, und die Website wird ohne sie nicht wie vorgesehen funktionieren. Diese Cookies speichern keine personenbezogenen Daten.",
+                linkedCategory: "necessary"
+              },
+              {
+                title: "Analyse-Cookies",
+                description: "Analyse-Cookies werden verwendet, um zu verstehen, wie Besucher mit der Website interagieren. Diese Cookies helfen bei der Bereitstellung von Informationen zu Metriken wie Besucherzahl, Absprungrate, Traffic-Quelle usw.",
+                linkedCategory: "analytics"
+              }
+            ]
+          }
+        }
+      }
+    },
+    onConsent: ({ cookie }) => {
+      if (cookie.categories.includes('analytics')) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (typeof gtag === 'function') {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          gtag('consent', 'update', {
+            analytics_storage: 'granted',
+          });
+        }
+      }
+    },
+    onChange: ({ cookie, changedCategories }) => {
+      if (changedCategories.includes('analytics')) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (typeof gtag === 'function') {
+           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          gtag('consent', 'update', {
+            analytics_storage: cookie.categories.includes('analytics') ? 'granted' : 'denied',
+          });
+        }
+      }
+    }
+  });
+</script>
