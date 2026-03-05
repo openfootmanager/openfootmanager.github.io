@@ -9,7 +9,7 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
-import { type Lang, defaultLang } from "../i18n/ui";
+import { type Lang, defaultLang, languages } from "../i18n/ui";
 import { useTranslations, getHtmlLang } from "../i18n/utils";
 
 interface Props {
@@ -41,6 +41,64 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <link rel="icon" type="image/svg+xml" href="/openfootball.svg" />
     <link rel="canonical" href={canonicalURL} />
+
+    {/* Alternate language links */}
+    {
+      Object.keys(languages).map((l) => {
+        const isDefault = l === defaultLang;
+        // Re-map the current path for the target language (l)
+        // e.g., /pt-br/about -> /es/about or /en/about -> /about
+        // We can use getBaseSlug from utils, or do a simple replace since getLocalePath exists.
+
+        // Extract the 'slug' without the language prefix for the current path
+        let slug = Astro.url.pathname;
+        for (const prefix of Object.keys(languages).filter(
+          (k) => k !== defaultLang,
+        )) {
+          if (slug.startsWith(`/${prefix}/`)) {
+            slug = slug.substring(`/${prefix}`.length);
+            break;
+          } else if (slug === `/${prefix}`) {
+            slug = "/";
+            break;
+          }
+        }
+
+        const targetPath = isDefault
+          ? slug
+          : `/${l}${slug === "/" ? "" : slug}`;
+        const url = new URL(targetPath, Astro.site);
+
+        return (
+          <link
+            rel="alternate"
+            hreflang={getHtmlLang(l as Lang)}
+            href={url.href}
+          />
+        );
+      })
+    }
+    {/* x-default */}
+    {
+      (() => {
+        let slug = Astro.url.pathname;
+        for (const prefix of Object.keys(languages).filter(
+          (k) => k !== defaultLang,
+        )) {
+          if (slug.startsWith(`/${prefix}/`)) {
+            slug = slug.substring(`/${prefix}`.length);
+            break;
+          } else if (slug === `/${prefix}`) {
+            slug = "/";
+            break;
+          }
+        }
+        const defaultUrl = new URL(slug, Astro.site);
+        return (
+          <link rel="alternate" hreflang="x-default" href={defaultUrl.href} />
+        );
+      })()
+    }
 
     <title>{title}</title>
     <meta name="description" content={description} />

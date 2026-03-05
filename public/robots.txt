@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://openfootmanager.com/sitemap-index.xml
