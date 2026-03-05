@@ -1,0 +1,130 @@
+---
+import { type Lang, defaultLang, languages } from "../i18n/ui";
+import { getHtmlLang } from "../i18n/utils";
+
+interface Props {
+    title: string;
+    description: string;
+    image: string;
+    lang: Lang;
+}
+
+const { title, description, image, lang } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+<meta name="theme-color" content="#0f172a" />
+
+<link rel="icon" type="image/svg+xml" href="/openfootball.svg" />
+<link rel="canonical" href={canonicalURL} />
+
+{/* Alternate language links */}
+{
+    Object.keys(languages).map((l) => {
+        const isDefault = l === defaultLang;
+        let slug = Astro.url.pathname;
+        for (const prefix of Object.keys(languages).filter(
+            (k) => k !== defaultLang,
+        )) {
+            if (slug.startsWith(`/${prefix}/`)) {
+                slug = slug.substring(`/${prefix}`.length);
+                break;
+            } else if (slug === `/${prefix}`) {
+                slug = "/";
+                break;
+            }
+        }
+        const targetPath = isDefault
+            ? slug
+            : `/${l}${slug === "/" ? "" : slug}`;
+        const url = new URL(targetPath, Astro.site);
+
+        return (
+            <link
+                rel="alternate"
+                hreflang={getHtmlLang(l as Lang)}
+                href={url.href}
+            />
+        );
+    })
+}
+{/* x-default */}
+{
+    (() => {
+        let slug = Astro.url.pathname;
+        for (const prefix of Object.keys(languages).filter(
+            (k) => k !== defaultLang,
+        )) {
+            if (slug.startsWith(`/${prefix}/`)) {
+                slug = slug.substring(`/${prefix}`.length);
+                break;
+            } else if (slug === `/${prefix}`) {
+                slug = "/";
+                break;
+            }
+        }
+        const defaultUrl = new URL(slug, Astro.site);
+        return (
+            <link rel="alternate" hreflang="x-default" href={defaultUrl.href} />
+        );
+    })()
+}
+
+<title>{title}</title>
+<meta name="description" content={description} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(image, Astro.url)} />
+
+<script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    // Default to denied for GDPR compliance
+    gtag("consent", "default", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+    });
+</script>
+
+<script
+    is:inline
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-NYTC7DD45D"></script>
+
+<script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-NYTC7DD45D");
+</script>
+
+<!-- Prevent FOUC for dark mode -->
+<script is:inline>
+    const theme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+    ).matches;
+    if (theme === "dark" || (!theme && prefersDark)) {
+        document.documentElement.classList.add("dark");
+    }
+</script>
