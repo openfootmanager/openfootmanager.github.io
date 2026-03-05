@@ -31,6 +31,16 @@ export default function DownloadSplitButton({ label, iconSvg, defaultIndex = 0, 
         {/* Main download button */}
         <a
           href={selected.url}
+          onClick={() => {
+            if (typeof window !== 'undefined' && 'gtag' in window) {
+              // @ts-ignore
+              window.gtag('event', 'click_download', {
+                platform: label,
+                file_name: selected.filename,
+                architecture: selected.arch
+              });
+            }
+          }}
           className="flex-1 min-w-0 flex items-center gap-3 px-4 py-3 bg-emerald-500 hover:bg-emerald-400 text-white transition-all duration-200"
         >
           <span
@@ -81,14 +91,21 @@ export default function DownloadSplitButton({ label, iconSvg, defaultIndex = 0, 
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
+                if (typeof window !== 'undefined' && 'gtag' in window) {
+                  // @ts-ignore
+                  window.gtag('event', 'click_download', {
+                    platform: label,
+                    file_name: opt.filename,
+                    architecture: opt.arch
+                  });
+                }
                 setSelectedIndex(i);
                 setOpen(false);
               }}
-              className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-sm transition-colors text-left cursor-pointer ${
-                i === selectedIndex
-                  ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400'
-                  : 'text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:text-emerald-600 dark:hover:text-emerald-400'
-              } ${i !== options.length - 1 ? 'border-b border-slate-100 dark:border-slate-800' : ''}`}
+              className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-sm transition-colors text-left cursor-pointer ${i === selectedIndex
+                ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400'
+                : 'text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:text-emerald-600 dark:hover:text-emerald-400'
+                } ${i !== options.length - 1 ? 'border-b border-slate-100 dark:border-slate-800' : ''}`}
             >
               <div className="flex items-center gap-2 min-w-0">
                 <svg
