@@ -22,6 +22,8 @@ const t = useTranslations(lang);
     <Image
       src={crowdImg}
       alt=""
+      widths={[640, 1024, 1920, crowdImg.width]}
+      sizes="100vw"
       class="w-full h-full object-cover"
       loading="eager"
       fetchpriority="high"

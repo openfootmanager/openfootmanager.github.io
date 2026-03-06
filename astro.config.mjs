@@ -8,6 +8,9 @@ import partytown from '@astrojs/partytown';
 
 export default defineConfig({
   site: 'https://openfootmanager.com',
+  build: {
+    inlineStylesheets: 'always',
+  },
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'pt-br', 'pt-pt', 'es', 'fr', 'de'],

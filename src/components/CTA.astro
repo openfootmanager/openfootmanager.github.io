@@ -20,6 +20,8 @@ const t = useTranslations(lang);
     <Image
       src={trophyImg}
       alt=""
+      widths={[640, 1024, 1920, trophyImg.width]}
+      sizes="100vw"
       class="w-full h-full object-cover"
       loading="lazy"
     />
