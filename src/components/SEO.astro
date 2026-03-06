@@ -1,6 +1,10 @@
 ---
 import { type Lang, defaultLang, languages } from "../i18n/ui";
 import { getHtmlLang } from "../i18n/utils";
+import inter400 from "@fontsource/inter/files/inter-latin-400-normal.woff2?url";
+import inter600 from "@fontsource/inter/files/inter-latin-600-normal.woff2?url";
+import barlow600 from "@fontsource/barlow-condensed/files/barlow-condensed-latin-600-normal.woff2?url";
+import barlow700 from "@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2?url";
 
 interface Props {
   title: string;
@@ -17,6 +21,35 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 <meta name="theme-color" content="#0f172a" />
+
+<link
+  rel="preload"
+  as="font"
+  type="font/woff2"
+  href={inter400}
+  crossorigin="anonymous"
+/>
+<link
+  rel="preload"
+  as="font"
+  type="font/woff2"
+  href={inter600}
+  crossorigin="anonymous"
+/>
+<link
+  rel="preload"
+  as="font"
+  type="font/woff2"
+  href={barlow600}
+  crossorigin="anonymous"
+/>
+<link
+  rel="preload"
+  as="font"
+  type="font/woff2"
+  href={barlow700}
+  crossorigin="anonymous"
+/>
 
 <link rel="icon" type="image/svg+xml" href="/openfootball.svg" />
 <link rel="canonical" href={canonicalURL} />
