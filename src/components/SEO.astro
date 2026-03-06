@@ -130,10 +130,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 </script>
 
 <script
-  type="text/partytown"
+  is:inline
+  async
   src="https://www.googletagmanager.com/gtag/js?id=G-NYTC7DD45D"></script>
 
-<script type="text/partytown">
+<script is:inline>
   window.dataLayer = window.dataLayer || [];
   function gtag() {
     dataLayer.push(arguments);
