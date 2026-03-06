@@ -3,10 +3,10 @@ import { type Lang, defaultLang, languages } from "../i18n/ui";
 import { getHtmlLang } from "../i18n/utils";
 
 interface Props {
-    title: string;
-    description: string;
-    image: string;
-    lang: Lang;
+  title: string;
+  description: string;
+  image: string;
+  lang: Lang;
 }
 
 const { title, description, image, lang } = Astro.props;
@@ -23,54 +23,46 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 {/* Alternate language links */}
 {
-    Object.keys(languages).map((l) => {
-        const isDefault = l === defaultLang;
-        let slug = Astro.url.pathname;
-        for (const prefix of Object.keys(languages).filter(
-            (k) => k !== defaultLang,
-        )) {
-            if (slug.startsWith(`/${prefix}/`)) {
-                slug = slug.substring(`/${prefix}`.length);
-                break;
-            } else if (slug === `/${prefix}`) {
-                slug = "/";
-                break;
-            }
-        }
-        const targetPath = isDefault
-            ? slug
-            : `/${l}${slug === "/" ? "" : slug}`;
-        const url = new URL(targetPath, Astro.site);
+  Object.keys(languages).map((l) => {
+    const isDefault = l === defaultLang;
+    let slug = Astro.url.pathname;
+    for (const prefix of Object.keys(languages).filter(
+      (k) => k !== defaultLang,
+    )) {
+      if (slug.startsWith(`/${prefix}/`)) {
+        slug = slug.substring(`/${prefix}`.length);
+        break;
+      } else if (slug === `/${prefix}`) {
+        slug = "/";
+        break;
+      }
+    }
+    const targetPath = isDefault ? slug : `/${l}${slug === "/" ? "" : slug}`;
+    const url = new URL(targetPath, Astro.site);
 
-        return (
-            <link
-                rel="alternate"
-                hreflang={getHtmlLang(l as Lang)}
-                href={url.href}
-            />
-        );
-    })
+    return (
+      <link rel="alternate" hreflang={getHtmlLang(l as Lang)} href={url.href} />
+    );
+  })
 }
 {/* x-default */}
 {
-    (() => {
-        let slug = Astro.url.pathname;
-        for (const prefix of Object.keys(languages).filter(
-            (k) => k !== defaultLang,
-        )) {
-            if (slug.startsWith(`/${prefix}/`)) {
-                slug = slug.substring(`/${prefix}`.length);
-                break;
-            } else if (slug === `/${prefix}`) {
-                slug = "/";
-                break;
-            }
-        }
-        const defaultUrl = new URL(slug, Astro.site);
-        return (
-            <link rel="alternate" hreflang="x-default" href={defaultUrl.href} />
-        );
-    })()
+  (() => {
+    let slug = Astro.url.pathname;
+    for (const prefix of Object.keys(languages).filter(
+      (k) => k !== defaultLang,
+    )) {
+      if (slug.startsWith(`/${prefix}/`)) {
+        slug = slug.substring(`/${prefix}`.length);
+        break;
+      } else if (slug === `/${prefix}`) {
+        slug = "/";
+        break;
+      }
+    }
+    const defaultUrl = new URL(slug, Astro.site);
+    return <link rel="alternate" hreflang="x-default" href={defaultUrl.href} />;
+  })()
 }
 
 <title>{title}</title>
@@ -90,41 +82,38 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta name="twitter:image" content={new URL(image, Astro.url)} />
 
 <script is:inline>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-        dataLayer.push(arguments);
-    }
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
 
-    // Default to denied for GDPR compliance
-    gtag("consent", "default", {
-        analytics_storage: "denied",
-        ad_storage: "denied",
-        ad_user_data: "denied",
-        ad_personalization: "denied",
-    });
+  // Default to denied for GDPR compliance
+  gtag("consent", "default", {
+    analytics_storage: "denied",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
 </script>
 
 <script
-    is:inline
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-NYTC7DD45D"></script>
+  type="text/partytown"
+  src="https://www.googletagmanager.com/gtag/js?id=G-NYTC7DD45D"></script>
 
-<script is:inline>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-    gtag("config", "G-NYTC7DD45D");
+<script type="text/partytown">
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "G-NYTC7DD45D");
 </script>
 
 <!-- Prevent FOUC for dark mode -->
 <script is:inline>
-    const theme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-    ).matches;
-    if (theme === "dark" || (!theme && prefersDark)) {
-        document.documentElement.classList.add("dark");
-    }
+  const theme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  if (theme === "dark" || (!theme && prefersDark)) {
+    document.documentElement.classList.add("dark");
+  }
 </script>

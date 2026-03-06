@@ -4,6 +4,8 @@ import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import icon from 'astro-icon';
 
+import partytown from '@astrojs/partytown';
+
 export default defineConfig({
   site: 'https://openfootmanager.com',
   i18n: {
@@ -18,5 +20,10 @@ export default defineConfig({
     tailwind(),
     mdx(),
     icon(),
+    partytown({
+      config: {
+        forward: ["dataLayer.push"],
+      },
+    }),
   ],
 });
