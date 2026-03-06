@@ -22,6 +22,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta name="generator" content={Astro.generator} />
 <meta name="theme-color" content="#0f172a" />
 
+<!-- Security Headers -->
+<meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com; frame-src 'none'; object-src 'none';"
+/>
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-Frame-Options" content="DENY" />
+
 <link
   rel="preload"
   as="font"
