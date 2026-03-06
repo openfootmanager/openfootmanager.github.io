@@ -24,6 +24,7 @@ const t = useTranslations(lang);
       alt=""
       class="w-full h-full object-cover"
       loading="eager"
+      fetchpriority="high"
     />
     <div
       class="absolute inset-0 bg-gradient-to-b from-emerald-950/80 via-emerald-950/60 to-slate-950"
@@ -36,7 +37,10 @@ const t = useTranslations(lang);
     <img
       src="/openfootlogo.svg"
       alt="Openfoot Manager"
-      class="h-28 md:h-36 mx-auto mb-8 drop-shadow-2xl animate-fade-in"
+      width="762"
+      height="223"
+      fetchpriority="high"
+      class="h-28 md:h-36 mx-auto w-auto mb-8 drop-shadow-2xl animate-fade-in"
     />
 
     <h1

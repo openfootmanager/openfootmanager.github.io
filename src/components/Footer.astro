@@ -1,6 +1,9 @@
 ---
-import { type Lang, defaultLang } from '../i18n/ui';
-import { useTranslations, getLocalePath } from '../i18n/utils';
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import { type Lang, defaultLang } from "../i18n/ui";
+import { useTranslations, getLocalePath } from "../i18n/utils";
+import openfootBall from "../../public/openfootball.svg";
 
 interface Props {
   lang?: Lang;
@@ -15,52 +18,123 @@ const currentYear = new Date().getFullYear();
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
       <!-- Brand -->
-      <div class="md:col-span-2">
-        <a href={getLocalePath(lang, '/')} class="flex items-center gap-3 mb-4">
-          <img src="/openfootball.svg" alt="Openfoot Manager" class="h-8 w-8" />
-          <span class="font-heading text-lg font-bold text-white uppercase tracking-wide">
-            Openfoot Manager
+      <div class="space-y-4">
+        <a
+          href={getLocalePath(lang, "/")}
+          class="flex items-center gap-3 w-fit"
+        >
+          <Image
+            src={openfootBall}
+            alt="Openfoot Manager"
+            width={32}
+            height={32}
+            class="h-8 w-8"
+          />
+          <span
+            class="font-heading font-bold text-xl uppercase tracking-wider text-slate-900 dark:text-white"
+          >
+            Openfoot <span class="text-emerald-600 dark:text-emerald-400"
+              >Manager</span
+            >
           </span>
         </a>
         <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
-          {t('footer.description')}
+          {t("footer.description")}
         </p>
       </div>
 
       <!-- Navigation -->
       <div>
-        <h3 class="font-heading text-sm font-bold uppercase tracking-wider text-white mb-4">{t('footer.navigate')}</h3>
+        <h3
+          class="font-heading text-sm font-bold uppercase tracking-wider text-white mb-4"
+        >
+          {t("footer.navigate")}
+        </h3>
         <ul class="space-y-2">
-          <li><a href={getLocalePath(lang, '/')} class="text-sm text-slate-400 hover:text-emerald-400 transition-colors">{t('footer.nav.home')}</a></li>
-          <li><a href={getLocalePath(lang, '/#features')} class="text-sm text-slate-400 hover:text-emerald-400 transition-colors">{t('footer.nav.features')}</a></li>
-          <li><a href={getLocalePath(lang, '/blog')} class="text-sm text-slate-400 hover:text-emerald-400 transition-colors">{t('footer.nav.blog')}</a></li>
-          <li><a href={getLocalePath(lang, '/about')} class="text-sm text-slate-400 hover:text-emerald-400 transition-colors">{t('footer.nav.about')}</a></li>
-          <li><a href={getLocalePath(lang, '/download')} class="text-sm text-slate-400 hover:text-emerald-400 transition-colors">{t('nav.download')}</a></li>
+          <li>
+            <a
+              href={getLocalePath(lang, "/")}
+              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+              >{t("footer.nav.home")}</a
+            >
+          </li>
+          <li>
+            <a
+              href={getLocalePath(lang, "/#features")}
+              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+              >{t("footer.nav.features")}</a
+            >
+          </li>
+          <li>
+            <a
+              href={getLocalePath(lang, "/blog")}
+              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+              >{t("footer.nav.blog")}</a
+            >
+          </li>
+          <li>
+            <a
+              href={getLocalePath(lang, "/about")}
+              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+              >{t("footer.nav.about")}</a
+            >
+          </li>
+          <li>
+            <a
+              href={getLocalePath(lang, "/download")}
+              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+              >{t("nav.download")}</a
+            >
+          </li>
         </ul>
       </div>
 
       <!-- Community -->
       <div>
-        <h3 class="font-heading text-sm font-bold uppercase tracking-wider text-white mb-4">{t('footer.community')}</h3>
+        <h3
+          class="font-heading text-sm font-bold uppercase tracking-wider text-white mb-4"
+        >
+          {t("footer.community")}
+        </h3>
         <ul class="space-y-2">
           <li>
-            <a href="https://github.com/openfootmanager/openfootmanager" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
-              {t('footer.community.github')}
+            <a
+              href="https://github.com/openfootmanager/openfootmanager"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+            >
+              {t("footer.community.github")}
             </a>
           </li>
           <li>
-            <a href="https://github.com/openfootmanager/openfootmanager/blob/develop/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
-              {t('footer.community.contributing')}
+            <a
+              href="https://github.com/openfootmanager/openfootmanager/blob/develop/CONTRIBUTING.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+            >
+              {t("footer.community.contributing")}
             </a>
           </li>
           <li>
-            <a href="https://github.com/openfootmanager/openfootmanager/issues" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
-              {t('footer.community.bug')}
+            <a
+              href="https://github.com/openfootmanager/openfootmanager/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+            >
+              {t("footer.community.bug")}
             </a>
           </li>
           <li>
-            <a href="https://www.gnu.org/licenses/gpl-3.0" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-400 hover:text-emerald-400 transition-colors">
-              {t('footer.community.license')}
+            <a
+              href="https://www.gnu.org/licenses/gpl-3.0"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+            >
+              {t("footer.community.license")}
             </a>
           </li>
         </ul>
@@ -68,12 +142,14 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <!-- Bottom bar -->
-    <div class="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div
+      class="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4"
+    >
       <p class="text-xs text-slate-500">
-        {t('footer.copyright').replace('{year}', String(currentYear))}
+        {t("footer.copyright").replace("{year}", String(currentYear))}
       </p>
       <p class="text-xs text-slate-600">
-        {t('footer.disclaimer')}
+        {t("footer.disclaimer")}
       </p>
     </div>
   </div>
