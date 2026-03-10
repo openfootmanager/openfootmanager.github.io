@@ -16,7 +16,7 @@ const currentYear = new Date().getFullYear();
 
 <footer class="bg-slate-950 border-t border-slate-800">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <!-- Brand -->
       <div class="space-y-4">
         <a
@@ -44,100 +44,104 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <!-- Navigation -->
-      <div>
-        <h3
-          class="font-heading text-sm font-bold uppercase tracking-wider text-white mb-4"
-        >
-          {t("footer.navigate")}
-        </h3>
-        <ul class="space-y-2">
-          <li>
-            <a
-              href={getLocalePath(lang, "/")}
-              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
-              >{t("footer.nav.home")}</a
-            >
-          </li>
-          <li>
-            <a
-              href={getLocalePath(lang, "/#features")}
-              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
-              >{t("footer.nav.features")}</a
-            >
-          </li>
-          <li>
-            <a
-              href={getLocalePath(lang, "/blog")}
-              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
-              >{t("footer.nav.blog")}</a
-            >
-          </li>
-          <li>
-            <a
-              href={getLocalePath(lang, "/about")}
-              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
-              >{t("footer.nav.about")}</a
-            >
-          </li>
-          <li>
-            <a
-              href={getLocalePath(lang, "/download")}
-              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
-              >{t("nav.download")}</a
-            >
-          </li>
-        </ul>
+      <div class="flex justify-end">
+        <div>
+          <h3
+            class="font-heading text-sm font-bold uppercase tracking-wider text-white mb-4"
+          >
+            {t("footer.navigate")}
+          </h3>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href={getLocalePath(lang, "/")}
+                class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+                >{t("footer.nav.home")}</a
+              >
+            </li>
+            <li>
+              <a
+                href={getLocalePath(lang, "/#features")}
+                class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+                >{t("footer.nav.features")}</a
+              >
+            </li>
+            <li>
+              <a
+                href={getLocalePath(lang, "/blog")}
+                class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+                >{t("footer.nav.blog")}</a
+              >
+            </li>
+            <li>
+              <a
+                href={getLocalePath(lang, "/about")}
+                class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+                >{t("footer.nav.about")}</a
+              >
+            </li>
+            <li>
+              <a
+                href={getLocalePath(lang, "/download")}
+                class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+                >{t("nav.download")}</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
 
       <!-- Community -->
-      <div>
-        <h3
-          class="font-heading text-sm font-bold uppercase tracking-wider text-white mb-4"
-        >
-          {t("footer.community")}
-        </h3>
-        <ul class="space-y-2">
-          <li>
-            <a
-              href="https://github.com/openfootmanager/openfootmanager"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
-            >
-              {t("footer.community.github")}
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/openfootmanager/openfootmanager/blob/develop/CONTRIBUTING.md"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
-            >
-              {t("footer.community.contributing")}
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/openfootmanager/openfootmanager/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
-            >
-              {t("footer.community.bug")}
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.gnu.org/licenses/gpl-3.0"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
-            >
-              {t("footer.community.license")}
-            </a>
-          </li>
-        </ul>
+      <div class="flex justify-end">
+        <div>
+          <h3
+            class="font-heading text-sm font-bold uppercase tracking-wider text-white mb-4"
+          >
+            {t("footer.community")}
+          </h3>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="https://github.com/openfootmanager/openfootmanager"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+              >
+                {t("footer.community.github")}
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/openfootmanager/openfootmanager/blob/develop/CONTRIBUTING.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+              >
+                {t("footer.community.contributing")}
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/openfootmanager/openfootmanager/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+              >
+                {t("footer.community.bug")}
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.gnu.org/licenses/gpl-3.0"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm text-slate-400 hover:text-emerald-400 transition-colors"
+              >
+                {t("footer.community.license")}
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 

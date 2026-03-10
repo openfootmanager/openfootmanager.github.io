@@ -1,20 +1,29 @@
 ---
-import { Icon } from 'astro-icon/components';
-import { languages, defaultLang, type Lang } from '../i18n/ui';
+import { Icon } from "astro-icon/components";
+import { languages, defaultLang, type Lang } from "../i18n/ui";
 
 interface Props {
   lang?: Lang;
 }
 
 const currentLang = Astro.props.lang ?? defaultLang;
+const localePattern = Object.keys(languages)
+  .filter((lang) => lang !== defaultLang)
+  .map((lang) => lang.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+  .join("|");
 
 // Get the current path without the lang prefix
 const pathname = Astro.url.pathname;
-const pathWithoutLang = pathname.replace(/^\/(pt-br|pt-pt|es|fr|de)(\/|$)/, '/');
+const pathWithoutLang = localePattern
+  ? pathname.replace(new RegExp(`^/(${localePattern})(/|$)`), "/")
+  : pathname;
 
 function getPathForLang(targetLang: Lang): string {
-  if (targetLang === defaultLang) return pathWithoutLang || '/';
-  return `/${targetLang}${pathWithoutLang === '/' ? '' : pathWithoutLang}` || `/${targetLang}`;
+  if (targetLang === defaultLang) return pathWithoutLang || "/";
+  return (
+    `/${targetLang}${pathWithoutLang === "/" ? "" : pathWithoutLang}` ||
+    `/${targetLang}`
+  );
 }
 
 const langEntries = Object.entries(languages) as [Lang, string][];
@@ -33,41 +42,45 @@ const langEntries = Object.entries(languages) as [Lang, string][];
   <div
     class="lang-dropdown hidden absolute right-0 top-full mt-2 w-[14rem] bg-slate-900 border border-slate-700 rounded-xl shadow-xl overflow-hidden z-50"
   >
-    {langEntries.map(([code, name]) => (
-      <a
-        href={getPathForLang(code)}
-        class:list={[
-          'block px-4 py-2.5 text-sm transition-colors',
-          code === currentLang
-            ? 'bg-emerald-500/10 text-emerald-400 font-semibold'
-            : 'text-slate-300 hover:bg-white/5 hover:text-white',
-        ]}
-      >
-        <span class="font-heading uppercase text-xs tracking-wider mr-2 opacity-50">{code}</span>
-        {name}
-      </a>
-    ))}
+    {
+      langEntries.map(([code, name]) => (
+        <a
+          href={getPathForLang(code)}
+          class:list={[
+            "block px-4 py-2.5 text-sm transition-colors",
+            code === currentLang
+              ? "bg-emerald-500/10 text-emerald-400 font-semibold"
+              : "text-slate-300 hover:bg-white/5 hover:text-white",
+          ]}
+        >
+          <span class="font-heading uppercase text-xs tracking-wider mr-2 opacity-50">
+            {code}
+          </span>
+          {name}
+        </a>
+      ))
+    }
   </div>
 </div>
 
 <script>
-  document.querySelectorAll('.lang-switcher').forEach((switcher) => {
-    const btn = switcher.querySelector('.lang-btn');
-    const dropdown = switcher.querySelector('.lang-dropdown');
+  document.querySelectorAll(".lang-switcher").forEach((switcher) => {
+    const btn = switcher.querySelector(".lang-btn");
+    const dropdown = switcher.querySelector(".lang-dropdown");
 
-    btn?.addEventListener('click', (e) => {
+    btn?.addEventListener("click", (e) => {
       e.stopPropagation();
       // Close all other dropdowns first
-      document.querySelectorAll('.lang-dropdown').forEach((d) => {
-        if (d !== dropdown) d.classList.add('hidden');
+      document.querySelectorAll(".lang-dropdown").forEach((d) => {
+        if (d !== dropdown) d.classList.add("hidden");
       });
-      dropdown?.classList.toggle('hidden');
+      dropdown?.classList.toggle("hidden");
     });
   });
 
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.lang-dropdown').forEach((d) => {
-      d.classList.add('hidden');
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".lang-dropdown").forEach((d) => {
+      d.classList.add("hidden");
     });
   });
 </script>

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import DownloadPageContent from "../components/DownloadPageContent.astro";
+import FeaturesPageContent from "../components/FeaturesPageContent.astro";
 import { defaultLang } from "../i18n/ui";
 import { useTranslations } from "../i18n/utils";
 
@@ -9,9 +9,9 @@ const t = useTranslations(lang);
 ---
 
 <BaseLayout
-  title={`${t("download.badge")} — Openfoot Manager`}
-  description={t("download.subtitle")}
+  title={`${t("nav.features")} — Openfoot Manager`}
+  description={t("features.subheading")}
   lang={lang}
 >
-  <DownloadPageContent lang={lang} />
+  <FeaturesPageContent lang={lang} />
 </BaseLayout>

@@ -1,0 +1,188 @@
+---
+import { type Lang, defaultLang } from "../i18n/ui";
+import { useTranslations } from "../i18n/utils";
+
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang ?? defaultLang;
+const t = useTranslations(lang);
+
+const showcases = [
+  {
+    badge: t("features.page.matchlive"),
+    title: t("about.features.matches.title"),
+    description: t("about.features.matches.desc"),
+    primaryImage: {
+      src: "/images/features/matchlive.png",
+      label: t("features.page.matchlive"),
+    },
+    secondaryImages: [
+      {
+        src: "/images/features/playertalk.png",
+        label: t("features.page.teamtalk"),
+      },
+      {
+        src: "/images/features/presstalk.png",
+        label: t("features.page.press"),
+      },
+    ],
+    highlights: [
+      t("features.matchengine.title"),
+      t("features.fast.title"),
+      t("features.crossplatform.title"),
+    ],
+  },
+  {
+    badge: t("features.page.tactics"),
+    title: t("about.features.squad.title"),
+    description: t("about.features.squad.desc"),
+    primaryImage: {
+      src: "/images/features/manage_squad.png",
+      label: t("features.page.tactics"),
+    },
+    secondaryImages: [],
+    highlights: [
+      t("about.features.training.title"),
+      t("about.features.staff.title"),
+      t("about.features.finances.title"),
+    ],
+  },
+  {
+    badge: t("features.page.training"),
+    title: t("about.features.training.title"),
+    description: t("about.features.training.desc"),
+    primaryImage: {
+      src: "/images/features/training.png",
+      label: t("features.page.training"),
+    },
+    secondaryImages: [],
+    highlights: [
+      t("about.features.training.title"),
+      t("about.features.staff.title"),
+      t("features.fast.title"),
+    ],
+  },
+  {
+    badge: t("features.page.news"),
+    title: t("about.features.news.title"),
+    description: t("about.features.news.desc"),
+    primaryImage: {
+      src: "/images/features/news.png",
+      label: t("features.page.news"),
+    },
+    secondaryImages: [
+      {
+        src: "/images/features/inbox.png",
+        label: t("features.page.inbox"),
+      },
+    ],
+    highlights: [
+      t("about.features.news.title"),
+      t("features.opensource.title"),
+      t("about.features.mod.title"),
+    ],
+  },
+];
+---
+
+<section
+  class="relative overflow-hidden bg-gradient-to-b from-emerald-950 via-emerald-900/90 to-slate-950 pt-32 pb-20"
+>
+  <div
+    class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(16,185,129,0.18),transparent_45%)]"
+  >
+  </div>
+  <div class="container relative mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl">
+      <span
+        class="mb-4 inline-block rounded-full bg-emerald-900/30 px-4 py-1.5 text-xs font-heading font-bold uppercase tracking-widest text-emerald-400"
+      >
+        {t("nav.features")}
+      </span>
+      <h1
+        class="font-heading text-4xl font-bold uppercase text-white md:text-6xl"
+      >
+        {t("nav.features")}<br />
+        <span class="text-amber-400">Openfoot Manager</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-emerald-100/75">
+        {t("features.subheading")}
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white py-20 dark:bg-slate-950">
+  <div class="container mx-auto space-y-24 px-4 sm:px-6 lg:px-8">
+    {
+      showcases.map((showcase, index) => (
+        <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+          <div class={index % 2 === 1 ? "relative lg:order-2" : "relative"}>
+            <div class="space-y-5">
+              <div class="absolute -inset-4 rounded-[2rem] bg-emerald-500/10 blur-2xl" />
+              <div class="group relative aspect-[16/10] overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-950 shadow-2xl shadow-slate-950/10 dark:border-slate-800">
+                <img
+                  src={showcase.primaryImage.src}
+                  alt={showcase.primaryImage.label}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+                />
+                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent p-5">
+                  <span class="inline-flex rounded-full border border-white/15 bg-slate-950/70 px-3 py-1 text-[11px] font-heading font-bold uppercase tracking-[0.18em] text-white backdrop-blur">
+                    {showcase.primaryImage.label}
+                  </span>
+                </div>
+              </div>
+
+              {showcase.secondaryImages.length > 0 && (
+                <div
+                  class:list={[
+                    "grid gap-4",
+                    showcase.secondaryImages.length > 1 && "md:grid-cols-2",
+                  ]}
+                >
+                  {showcase.secondaryImages.map((image) => (
+                    <div class="group relative aspect-[16/10] overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-950 shadow-lg shadow-slate-950/10 dark:border-slate-800">
+                      <img
+                        src={image.src}
+                        alt={image.label}
+                        loading="lazy"
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                      <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent p-4">
+                        <span class="inline-flex rounded-full border border-white/15 bg-slate-950/70 px-3 py-1 text-[11px] font-heading font-bold uppercase tracking-[0.18em] text-white backdrop-blur">
+                          {image.label}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div class={index % 2 === 1 ? "lg:order-1" : undefined}>
+            <span class="inline-flex rounded-full bg-emerald-100 px-4 py-1.5 text-xs font-heading font-bold uppercase tracking-widest text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+              {showcase.badge}
+            </span>
+            <h2 class="mt-5 font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white md:text-4xl">
+              {showcase.title}
+            </h2>
+            <p class="mt-5 text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+              {showcase.description}
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              {showcase.highlights.map((highlight) => (
+                <span class="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-300">
+                  {highlight}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

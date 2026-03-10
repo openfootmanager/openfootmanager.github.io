@@ -13,7 +13,7 @@ const lang = Astro.props.lang ?? defaultLang;
 const t = useTranslations(lang);
 
 const navLinks = [
-  { href: getLocalePath(lang, "/#features"), label: t("nav.features") },
+  { href: getLocalePath(lang, "/features"), label: t("nav.features") },
   { href: getLocalePath(lang, "/blog"), label: t("nav.blog") },
   { href: getLocalePath(lang, "/about"), label: t("nav.about") },
 ];

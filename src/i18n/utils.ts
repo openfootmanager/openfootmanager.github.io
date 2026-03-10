@@ -1,4 +1,4 @@
-import { ui, defaultLang, type Lang } from './ui';
+import { ui, languages, defaultLang, type Lang } from './ui';
 
 export function getLangFromUrl(url: URL): Lang {
   const [, lang] = url.pathname.split('/');
@@ -26,6 +26,7 @@ export function getDateLocale(lang: Lang): string {
     es: 'es-ES',
     fr: 'fr-FR',
     de: 'de-DE',
+    it: 'it-IT',
   };
   return map[lang];
 }
@@ -38,6 +39,7 @@ export function getHtmlLang(lang: Lang): string {
     es: 'es',
     fr: 'fr',
     de: 'de',
+    it: 'it',
   };
   return map[lang];
 }
@@ -71,7 +73,9 @@ function getOrdinalSuffix(day: number): string {
 }
 
 export function getBaseSlug(slug: string): string {
-  const langPrefixes = ['pt-br/', 'pt-pt/', 'es/', 'fr/', 'de/'];
+  const langPrefixes = Object.keys(languages)
+    .filter((lang) => lang !== defaultLang)
+    .map((lang) => `${lang}/`);
   for (const prefix of langPrefixes) {
     if (slug.startsWith(prefix)) {
       return slug.slice(prefix.length);

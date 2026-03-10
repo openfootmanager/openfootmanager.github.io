@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  repository_dispatch:
+    types: [game_release_published]
   workflow_dispatch:
 
 permissions:
@@ -17,6 +19,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      RELEASE_MANIFEST_URL: ${{ github.event.client_payload.manifest_url || 'https://raw.githubusercontent.com/openfootmanager/openfootmanager/release-metadata/release-manifest.json' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
