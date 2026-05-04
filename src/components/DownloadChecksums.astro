@@ -7,9 +7,10 @@ import { useTranslations } from "../i18n/utils";
 interface Props {
   assets: ReleaseAsset[];
   lang: Lang;
+  title?: string;
 }
 
-const { assets, lang } = Astro.props;
+const { assets, lang, title } = Astro.props;
 const t = useTranslations(lang);
 ---
 
@@ -17,7 +18,7 @@ const t = useTranslations(lang);
   <h2
     class="font-heading text-3xl font-bold uppercase text-slate-900 dark:text-white mb-3"
   >
-    {t("download.checksums.title")}
+    {title ?? t("download.checksums.title")}
   </h2>
   <p class="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
     {t("download.checksums.description")}

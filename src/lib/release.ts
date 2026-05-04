@@ -1,20 +1,53 @@
-import type { ReleaseAsset, ReleaseManifest, ReleasePlatformGroup } from '../types/release';
+import type {
+  ReleaseAsset,
+  ReleaseChannel,
+  ReleaseManifest,
+  ReleasePlatformGroup,
+} from '../types/release';
 
 export const DEFAULT_RELEASE_MANIFEST_URL = 'https://raw.githubusercontent.com/openfootmanager/openfootmanager/release-metadata/release-manifest.json';
 
 const platformOrder = ['windows', 'macos', 'linux'];
 
-let releaseManifestPromise: Promise<ReleaseManifest> | undefined;
+const releaseManifestPromises = new Map<ReleaseChannel, Promise<ReleaseManifest>>();
 
-export async function getReleaseManifest(): Promise<ReleaseManifest> {
-  if (!releaseManifestPromise) {
-    releaseManifestPromise = fetchReleaseManifest();
+export async function getReleaseManifest(channel: ReleaseChannel = 'stable'): Promise<ReleaseManifest> {
+  const existingPromise = releaseManifestPromises.get(channel);
+
+  if (existingPromise) {
+    return existingPromise;
   }
 
-  return releaseManifestPromise;
+  const manifestPromise = fetchReleaseManifest(channel).catch((error) => {
+    releaseManifestPromises.delete(channel);
+    throw error;
+  });
+
+  releaseManifestPromises.set(channel, manifestPromise);
+
+  return manifestPromise;
 }
 
-export function getReleaseManifestUrl(): string {
+export async function getOptionalReleaseManifest(
+  channel: Exclude<ReleaseChannel, 'stable'>,
+): Promise<ReleaseManifest | null> {
+  if (!getReleaseManifestUrl(channel)) {
+    return null;
+  }
+
+  try {
+    return await getReleaseManifest(channel);
+  } catch (error) {
+    console.warn(`Skipping ${channel} release manifest.`, error);
+    return null;
+  }
+}
+
+export function getReleaseManifestUrl(channel: ReleaseChannel = 'stable'): string | undefined {
+  if (channel === 'nightly') {
+    return import.meta.env.NIGHTLY_RELEASE_MANIFEST_URL?.trim() || undefined;
+  }
+
   return import.meta.env.RELEASE_MANIFEST_URL?.trim() || DEFAULT_RELEASE_MANIFEST_URL;
 }
 
@@ -104,8 +137,13 @@ export function getAssetDisplayLabel(asset: ReleaseAsset): string {
   return asset.name;
 }
 
-async function fetchReleaseManifest(): Promise<ReleaseManifest> {
-  const manifestUrl = getReleaseManifestUrl();
+async function fetchReleaseManifest(channel: ReleaseChannel): Promise<ReleaseManifest> {
+  const manifestUrl = getReleaseManifestUrl(channel);
+
+  if (!manifestUrl) {
+    throw new Error(`Missing release manifest URL for ${channel} channel`);
+  }
+
   const response = await fetch(manifestUrl);
 
   if (!response.ok) {

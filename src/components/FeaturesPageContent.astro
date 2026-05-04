@@ -1,4 +1,5 @@
 ---
+import ZoomableScreenshot from "./ZoomableScreenshot.astro";
 import { type Lang, defaultLang } from "../i18n/ui";
 import { useTranslations } from "../i18n/utils";
 
@@ -122,19 +123,13 @@ const showcases = [
           <div class={index % 2 === 1 ? "relative lg:order-2" : "relative"}>
             <div class="space-y-5">
               <div class="absolute -inset-4 rounded-[2rem] bg-emerald-500/10 blur-2xl" />
-              <div class="group relative aspect-[16/10] overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-950 shadow-2xl shadow-slate-950/10 dark:border-slate-800">
-                <img
-                  src={showcase.primaryImage.src}
-                  alt={showcase.primaryImage.label}
-                  loading="lazy"
-                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
-                />
-                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent p-5">
-                  <span class="inline-flex rounded-full border border-white/15 bg-slate-950/70 px-3 py-1 text-[11px] font-heading font-bold uppercase tracking-[0.18em] text-white backdrop-blur">
-                    {showcase.primaryImage.label}
-                  </span>
-                </div>
-              </div>
+              <ZoomableScreenshot
+                src={showcase.primaryImage.src}
+                alt={showcase.primaryImage.label}
+                openLabel={t("features.page.zoom")}
+                closeLabel={t("features.page.close")}
+                variant="primary"
+              />
 
               {showcase.secondaryImages.length > 0 && (
                 <div
@@ -144,19 +139,12 @@ const showcases = [
                   ]}
                 >
                   {showcase.secondaryImages.map((image) => (
-                    <div class="group relative aspect-[16/10] overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-950 shadow-lg shadow-slate-950/10 dark:border-slate-800">
-                      <img
-                        src={image.src}
-                        alt={image.label}
-                        loading="lazy"
-                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                      />
-                      <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent p-4">
-                        <span class="inline-flex rounded-full border border-white/15 bg-slate-950/70 px-3 py-1 text-[11px] font-heading font-bold uppercase tracking-[0.18em] text-white backdrop-blur">
-                          {image.label}
-                        </span>
-                      </div>
-                    </div>
+                    <ZoomableScreenshot
+                      src={image.src}
+                      alt={image.label}
+                      openLabel={t("features.page.zoom")}
+                      closeLabel={t("features.page.close")}
+                    />
                   ))}
                 </div>
               )}

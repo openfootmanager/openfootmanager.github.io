@@ -12,6 +12,8 @@ export interface ReleaseAsset {
   extension: string;
 }
 
+export type ReleaseChannel = 'stable' | 'nightly';
+
 export interface ReleaseManifest {
   schemaVersion: number;
   product: string;
