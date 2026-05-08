@@ -67,7 +67,7 @@ const posts = (await getCollection("blog"))
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {posts.map((post) => (
               <a
-                href={getLocalePath(lang, `/blog/${getBaseSlug(post.slug)}`)}
+                href={getLocalePath(lang, `/blog/${getBaseSlug(post.id)}`)}
                 class="group block rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 overflow-hidden hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300"
               >
                 {post.data.image ? (

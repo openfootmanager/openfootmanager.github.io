@@ -1,7 +1,12 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
 const blog = defineCollection({
-  type: 'content',
+  loader: glob({
+    base: './src/content/blog',
+    pattern: '**/*.{md,mdx}',
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -11,7 +16,7 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     image: z.string().optional(),
     draft: z.boolean().default(false),
-    lang: z.enum(['en', 'pt-br', 'pt-pt', 'es', 'fr', 'de', 'it']).default('en'),
+    lang: z.enum(['en', 'pt-br', 'pt-pt', 'es', 'fr', 'de', 'it', 'zh-cn']).default('en'),
   }),
 });
 

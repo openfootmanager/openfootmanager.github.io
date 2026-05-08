@@ -27,6 +27,7 @@ export function getDateLocale(lang: Lang): string {
     fr: 'fr-FR',
     de: 'de-DE',
     it: 'it-IT',
+    'zh-cn': 'zh-CN',
   };
   return map[lang];
 }
@@ -40,6 +41,7 @@ export function getHtmlLang(lang: Lang): string {
     fr: 'fr',
     de: 'de',
     it: 'it',
+    'zh-cn': 'zh-CN',
   };
   return map[lang];
 }
