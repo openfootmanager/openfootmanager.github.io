@@ -20,7 +20,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      RELEASE_MANIFEST_URL: ${{ github.event.client_payload.manifest_url || 'https://raw.githubusercontent.com/openfootmanager/openfootmanager/release-metadata/release-manifest.json' }}
+      RELEASE_MANIFEST_URL: ${{ github.event.client_payload.stable_manifest_url || (github.event.client_payload.channel != 'nightly' && github.event.client_payload.manifest_url) || 'https://raw.githubusercontent.com/openfootmanager/openfootmanager/release-metadata/release-manifest.json' }}
+      NIGHTLY_RELEASE_MANIFEST_URL: ${{ github.event.client_payload.nightly_manifest_url || (github.event.client_payload.channel == 'nightly' && github.event.client_payload.manifest_url) || '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
