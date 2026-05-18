@@ -18,6 +18,8 @@ interface Props {
 const lang = Astro.props.lang ?? defaultLang;
 const t = useTranslations(lang);
 const dateLocale = getDateLocale(lang);
+const openImageLabel = t("features.page.zoom");
+const closeImageLabel = t("features.page.close");
 
 const {
   title,
@@ -48,7 +50,11 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString(dateLocale, {
   image={image}
   lang={lang}
 >
-  <article class="pt-32 pb-24">
+  <article
+    class="pt-32 pb-24"
+    data-blog-post-root
+    data-blog-open-label={openImageLabel}
+  >
     <div class="container-narrow">
       <!-- Back link -->
       <a
@@ -112,9 +118,166 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString(dateLocale, {
       }
 
       <!-- Content -->
-      <div class="prose-blog">
+      <div class="prose-blog" data-blog-content>
         <slot />
       </div>
+
+      <dialog
+        class="blog-image-dialog m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 text-white"
+        aria-label={closeImageLabel}
+        data-blog-image-dialog
+      >
+        <div
+          class="relative flex min-h-full items-center justify-center p-4 sm:p-8"
+        >
+          <button
+            type="button"
+            class="absolute right-4 top-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-slate-950/80 text-white backdrop-blur transition-colors hover:bg-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+            aria-label={closeImageLabel}
+            data-blog-image-close
+          >
+            <Icon name="lucide:x" class="h-5 w-5" />
+          </button>
+
+          <figure
+            class="flex max-w-[min(96vw,1600px)] cursor-auto flex-col items-center gap-4"
+          >
+            <img
+              src=""
+              alt=""
+              loading="lazy"
+              class="max-h-[82vh] w-auto max-w-full rounded-[1.5rem] border border-white/10 object-contain shadow-2xl shadow-black/60"
+              data-blog-image-preview
+            />
+            <figcaption
+              class="hidden rounded-full border border-white/10 bg-slate-950/70 px-4 py-2 text-sm font-semibold text-slate-100 backdrop-blur"
+              data-blog-image-caption
+            >
+            </figcaption>
+          </figure>
+        </div>
+      </dialog>
     </div>
   </article>
 </BaseLayout>
+
+<script>
+  document.querySelectorAll("[data-blog-post-root]").forEach((root) => {
+    if (!(root instanceof HTMLElement) || root.dataset.zoomBound === "true") {
+      return;
+    }
+
+    const dialog = root.querySelector("[data-blog-image-dialog]");
+    const previewImage = root.querySelector("[data-blog-image-preview]");
+    const caption = root.querySelector("[data-blog-image-caption]");
+    const closeButton = root.querySelector("[data-blog-image-close]");
+    const openLabel = root.dataset.blogOpenLabel ?? "Zoom image";
+
+    if (
+      !(dialog instanceof HTMLDialogElement) ||
+      !(previewImage instanceof HTMLImageElement) ||
+      !(caption instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    root.dataset.zoomBound = "true";
+
+    const closeDialog = () => {
+      if (!dialog.open) {
+        return;
+      }
+
+      dialog.close();
+    };
+
+    const openDialog = (image: HTMLImageElement) => {
+      const source = image.currentSrc || image.src;
+
+      if (!source) {
+        return;
+      }
+
+      const altText = image.alt.trim();
+
+      previewImage.src = source;
+      previewImage.alt = altText;
+      caption.textContent = altText;
+      caption.classList.toggle("hidden", altText.length === 0);
+
+      if (dialog.open) {
+        return;
+      }
+
+      document.documentElement.classList.add("overflow-hidden");
+      dialog.showModal();
+    };
+
+    root.querySelectorAll("[data-blog-content] img").forEach((image) => {
+      if (!(image instanceof HTMLImageElement) || image.closest("a")) {
+        return;
+      }
+
+      image.classList.add("blog-zoomable-image");
+
+      if (!image.hasAttribute("tabindex")) {
+        image.tabIndex = 0;
+      }
+
+      image.setAttribute("role", "button");
+
+      const altText = image.alt.trim();
+      image.setAttribute(
+        "aria-label",
+        altText.length > 0 ? `${openLabel}: ${altText}` : openLabel,
+      );
+
+      image.addEventListener("click", () => openDialog(image));
+      image.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") {
+          return;
+        }
+
+        event.preventDefault();
+        openDialog(image);
+      });
+    });
+
+    closeButton?.addEventListener("click", closeDialog);
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) {
+        closeDialog();
+      }
+    });
+
+    dialog.addEventListener("close", () => {
+      document.documentElement.classList.remove("overflow-hidden");
+    });
+  });
+</script>
+
+<style is:inline>
+  .blog-zoomable-image {
+    cursor: zoom-in;
+    transition:
+      transform 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  .blog-zoomable-image:hover,
+  .blog-zoomable-image:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 24px 40px -24px rgba(15, 23, 42, 0.5);
+    outline: none;
+  }
+
+  .blog-image-dialog {
+    border: none;
+  }
+
+  .blog-image-dialog::backdrop {
+    background: rgba(2, 6, 23, 0.86);
+    backdrop-filter: blur(14px);
+  }
+</style>

@@ -203,15 +203,26 @@ const requirements = [
         <p class="text-slate-600 dark:text-slate-400 mb-6 max-w-lg mx-auto">
           {t("download.community.text")}
         </p>
-        <a
-          href="https://github.com/openfootmanager/openfootmanager/issues"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-white font-heading font-bold uppercase tracking-wider rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25"
-        >
-          <Icon name="lucide:github" class="w-5 h-5" />
-          {t("download.community.button")}
-        </a>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a
+            href="https://github.com/openfootmanager/openfootmanager/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-white font-heading font-bold uppercase tracking-wider rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25"
+          >
+            <Icon name="lucide:github" class="w-5 h-5" />
+            {t("download.community.button")}
+          </a>
+          <a
+            href="https://discord.gg/2CXaesaukT"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-6 py-3 border-2 border-slate-300 hover:border-indigo-400 dark:border-slate-700 dark:hover:border-indigo-400 text-slate-900 dark:text-white font-heading font-bold uppercase tracking-wider rounded-xl transition-all duration-200"
+          >
+            <Icon name="lucide:messages-square" class="w-5 h-5 text-indigo-500" />
+            Discord
+          </a>
+        </div>
       </div>
     </div>
   </div>
