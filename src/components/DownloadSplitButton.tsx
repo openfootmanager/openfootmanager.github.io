@@ -1,19 +1,32 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
+import type { IconType } from 'react-icons';
+import { FaApple, FaLinux, FaWindows } from 'react-icons/fa';
 import type { DownloadOption } from '../data/downloads';
+
+type PlatformIcon = 'windows' | 'macos' | 'linux';
+const dropdownOpenEvent = 'download-split-open';
+
+const platformIcons: Record<PlatformIcon, IconType> = {
+  windows: FaWindows,
+  macos: FaApple,
+  linux: FaLinux,
+};
 
 interface Props {
   label: string;
-  iconSvg: string;
+  icon: PlatformIcon;
   defaultIndex?: number;
   options: DownloadOption[];
 }
 
-export default function DownloadSplitButton({ label, iconSvg, defaultIndex = 0, options }: Props) {
+export default function DownloadSplitButton({ label, icon, defaultIndex = 0, options }: Props) {
+  const instanceId = useId();
   const [selectedIndex, setSelectedIndex] = useState(defaultIndex);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const selected = options[selectedIndex];
+  const Icon = platformIcons[icon];
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -21,9 +34,23 @@ export default function DownloadSplitButton({ label, iconSvg, defaultIndex = 0, 
         setOpen(false);
       }
     }
+
+    function handleAnotherDropdownOpen(event: Event) {
+      const customEvent = event as CustomEvent<{ id: string }>;
+
+      if (customEvent.detail?.id !== instanceId) {
+        setOpen(false);
+      }
+    }
+
     document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
+    window.addEventListener(dropdownOpenEvent, handleAnotherDropdownOpen as EventListener);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      window.removeEventListener(dropdownOpenEvent, handleAnotherDropdownOpen as EventListener);
+    };
+  }, [instanceId]);
 
   return (
     <div ref={containerRef} className="relative">
@@ -43,16 +70,17 @@ export default function DownloadSplitButton({ label, iconSvg, defaultIndex = 0, 
           }}
           className="flex-1 min-w-0 flex items-center gap-3 px-4 py-3 bg-emerald-500 hover:bg-emerald-400 text-white transition-all duration-200"
         >
-          <span
-            className="w-5 h-5 flex-shrink-0"
-            dangerouslySetInnerHTML={{ __html: iconSvg }}
-          />
+          <Icon className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
           <div className="min-w-0 overflow-hidden">
             <div className="font-heading font-bold uppercase tracking-wider text-sm truncate">
               {label}
             </div>
-            <div className="text-[11px] text-emerald-100/80 truncate">
-              {selected.label} · {selected.arch} · {selected.size}
+            <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5 text-[11px] leading-tight text-emerald-100/80">
+              <span>{selected.label}</span>
+              <span aria-hidden="true">&middot;</span>
+              <span className="whitespace-nowrap">{selected.arch}</span>
+              <span aria-hidden="true">&middot;</span>
+              <span className="whitespace-nowrap">{selected.size}</span>
             </div>
           </div>
         </a>
@@ -62,10 +90,21 @@ export default function DownloadSplitButton({ label, iconSvg, defaultIndex = 0, 
           type="button"
           onClick={(e) => {
             e.stopPropagation();
-            setOpen((prev) => !prev);
+            setOpen((prev) => {
+              const nextOpen = !prev;
+
+              if (nextOpen) {
+                window.dispatchEvent(new CustomEvent(dropdownOpenEvent, {
+                  detail: { id: instanceId }
+                }));
+              }
+
+              return nextOpen;
+            });
           }}
           className="flex-shrink-0 w-10 flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white border-l border-emerald-400/30 transition-all duration-200 cursor-pointer"
           aria-label="Show download options"
+          aria-expanded={open}
         >
           <svg
             className={`w-4 h-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
@@ -125,8 +164,10 @@ export default function DownloadSplitButton({ label, iconSvg, defaultIndex = 0, 
                   <path d="M16 12h-2" />
                   <path d="M22 12h-2" />
                 </svg>
-                <span className="font-medium">{opt.label}</span>
-                <span className="text-xs text-slate-400 dark:text-slate-500 truncate">{opt.arch}</span>
+                <div className="min-w-0">
+                  <div className="font-medium leading-tight">{opt.label}</div>
+                  <div className="text-xs text-slate-400 dark:text-slate-500 leading-tight">{opt.arch}</div>
+                </div>
               </div>
               <span className="text-xs text-slate-400 dark:text-slate-500 flex-shrink-0">{opt.size}</span>
             </button>

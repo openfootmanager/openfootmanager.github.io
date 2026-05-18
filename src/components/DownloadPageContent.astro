@@ -18,8 +18,7 @@ const stablePrereleaseNotice = t("download.alpha.text").replace(
   stableRelease.tag,
 );
 
-const stableNotice = stableRelease.prerelease
-  ? {
+const stableNotice = {
       title: t("download.alpha.title"),
       text: stablePrereleaseNotice,
       items: [
@@ -28,8 +27,7 @@ const stableNotice = stableRelease.prerelease
         t("download.alpha.list.features"),
         t("download.alpha.list.feedback"),
       ],
-    }
-  : undefined;
+    };
 
 const nightlyNotice = nightlyRelease
   ? {

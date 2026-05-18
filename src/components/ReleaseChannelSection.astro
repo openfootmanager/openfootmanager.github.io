@@ -48,13 +48,6 @@ const badgeClasses =
         ? "text-amber-700 bg-amber-500/10 dark:text-amber-300 dark:bg-amber-900/30"
         : "text-emerald-400 bg-emerald-500/10 dark:bg-emerald-900/30";
 
-const iconMonitor =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>';
-const iconLaptop =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>';
-const iconTerminal =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>';
-
 function getDownloadsForPlatform(platform: string): DownloadOption[] {
     return release.assets
         .filter((asset) => asset.platform.trim().toLowerCase() === platform)
@@ -125,7 +118,7 @@ function mapReleaseAssetToDownloadOption(asset: ReleaseAsset): DownloadOption {
                     <DownloadSplitButton
                         client:load
                         label={t("download.button.windows")}
-                        iconSvg={iconMonitor}
+                        icon="windows"
                         options={windowsDownloads}
                     />
                 )
@@ -135,7 +128,7 @@ function mapReleaseAssetToDownloadOption(asset: ReleaseAsset): DownloadOption {
                     <DownloadSplitButton
                         client:load
                         label={t("download.button.macos")}
-                        iconSvg={iconLaptop}
+                        icon="macos"
                         options={macosDownloads}
                     />
                 )
@@ -145,7 +138,7 @@ function mapReleaseAssetToDownloadOption(asset: ReleaseAsset): DownloadOption {
                     <DownloadSplitButton
                         client:load
                         label={t("download.button.linux")}
-                        iconSvg={iconTerminal}
+                        icon="linux"
                         options={linuxDownloads}
                     />
                 )
